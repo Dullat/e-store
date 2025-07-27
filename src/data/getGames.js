@@ -8,9 +8,10 @@ const API_OPTIONS = {
     }
 }
 
-const getGames = async () => {
+const getGames = async (prefs) => {
     try {
-        const url = `https://api.rawg.io/api/games?key=${API_KEY}&page_size=12`;
+        console.log(prefs, "loggin ggg")
+        const url = `https://api.rawg.io/api/games?key=${API_KEY}${prefs}`;
         const response = await fetch(url);
         const data = await response.json();
         console.log(data.results[0])

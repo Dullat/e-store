@@ -19,7 +19,7 @@ function App() {
   const [games, setGames] = useState([])
   useEffect(() => {
     const fetchGames = async () => {
-      const data = await getGames()
+      const data = await getGames(`&ordering=-rating&page_size=5&dates=2023-01-01,2024-12-31`)
       setGames(data.results)
     }
 

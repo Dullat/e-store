@@ -3,7 +3,7 @@ import { FaGlobe, FaUser } from "react-icons/fa"
 
 const NavBar = () => {
     return (
-        <div className='text-white flex justify-between items-center p-4 *:flex *:items-center'>
+        <div className='text-white flex justify-between items-center p-4 *:flex *:items-center bg-[#0e0e10]'>
             <div className="text-2xl">Dullat Store</div>
             <nav className="gap-4">
                 <NavLink to="/" className={({isActive}) => isActive? "text-blue-600" : "text-white"}>
