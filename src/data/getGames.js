@@ -13,12 +13,15 @@ const getGames = async (prefs) => {
         console.log(prefs, "loggin ggg")
         const url = `https://api.rawg.io/api/games?key=${API_KEY}${prefs}`;
         const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Could Not Fetch data From API : ${response.status}`);
+        }
         const data = await response.json();
-        console.log(data.results[0])
+        // console.log(data.results[0])
         return data
 
     } catch (error) {
-        console.error('could not fetch')
+        throw error
     }
 }
 

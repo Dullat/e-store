@@ -42,7 +42,7 @@ const GameCard = ({ game }) => {
 
   return (
     <div
-      className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer max-w-[250px]"
+      className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer w-full h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
