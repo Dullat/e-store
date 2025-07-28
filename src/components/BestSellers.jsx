@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import CarouselSlide from "../utils/CarouselSlide"
 import getGames from "../data/getGames"
 
-const NewReleases = () => {
+const BestSellers = () => {
     const [games, setGames] = useState([])
     const [isError, setIsError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const prefs = `&platforms=4&dates=2025-01-01,2025-12-31&ordering=-released&page_size=12`
+    const prefs = `&platforms=4&dates=2023-01-01,2025-12-31&ordering=-added&page_size=12`
+
 
     useEffect(() => {
         const getData = async () => {
@@ -26,9 +27,9 @@ const NewReleases = () => {
 
     return (
         <>
-        <CarouselSlide games={games} isLoading={isLoading} isError={isError} sectionTitle={'New Releases'}/>
+        <CarouselSlide games={games} isLoading={isLoading} isError={isError} sectionTitle={'Best Sellers'}/>
         </>
     )
 }
 
-export default NewReleases
+export default BestSellers

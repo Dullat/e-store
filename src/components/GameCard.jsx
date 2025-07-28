@@ -119,22 +119,22 @@ const GameCard = ({ game }) => {
         </div>
 
         {/* Additional info row */}
-        <div className="flex items-center justify-between text-xs text-gray-500">
+        {/* <div className="flex items-center justify-between text-xs text-gray-500">
           <span>{game.added?.toLocaleString()} added</span>
           {game.playtime > 0 && (
             <span>{game.playtime}h avg playtime</span>
           )}
-        </div>
+        </div> */}
 
         {/* Hover action btns */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2 pt-2">
+        {/* <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2 pt-2">
           <button className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm py-2 px-3 rounded-md font-medium transition-colors duration-200">
             View Details
           </button>
           <button className="bg-gray-700 hover:bg-gray-600 text-white text-sm py-2 px-3 rounded-md transition-colors duration-200">
             ♡
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* BG glow */}

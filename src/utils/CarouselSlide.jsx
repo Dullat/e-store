@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import GameCard from '../components/GameCard'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import useResize from './useResize'
@@ -11,20 +11,26 @@ const CarouselSkeleton = () => {
   )
 }
 
-const CarouselSlide = ({ games, isError, isLoading }) => {
+const CarouselSlide = ({ games, isError, isLoading, sectionTitle }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [totalSlides, setTotalSlides] = useState(0)
   const itemsPerScreen = useResize()
+ 
 
-  useEffect(()=> {
+  useEffect(() => {
     setTotalSlides(() => {
-      if(itemsPerScreen === 3){
+
+      // const total = Math.ceil(games.length / itemsPerScreen)
+      
+      // return total
+      if (itemsPerScreen === 3) {
         return 4
-      }else if(itemsPerScreen === 2){
+      } else if (itemsPerScreen === 2) {
         return 6
       }
     })
   }, [itemsPerScreen])
+
 
   const scrollRight = () => {
     setCurrentSlide(prev => {
@@ -36,17 +42,11 @@ const CarouselSlide = ({ games, isError, isLoading }) => {
 
   const scrollLeft = () => {
     setCurrentSlide(prev => {
-      if (prev < 0) {
+      if (prev <= 0) {
         return 0
       } else return prev - 1
     })
   }
-
-  useEffect(() => {
-    console.log(itemsPerScreen, "items per screen")
-    console.log(currentSlide, "current slide");
-    console.log(totalSlides, "total slides");
-  },)
 
   if (isError) {
     return (
@@ -54,13 +54,13 @@ const CarouselSlide = ({ games, isError, isLoading }) => {
     )
   }
 
-  if (isLoading) () => <CarouselSkeleton />
+  if (isLoading) return <CarouselSkeleton />
 
   return (
     <div className="">
       <div className="flex items-center justify-between py-8 px-2">
-        <h2 className='text-3xl font-bold'>New Releases</h2>
-        <div className="flex gap-2 items-center">
+        <h2 className='text-3xl font-bold'>{sectionTitle}</h2>
+        <div className={`flex gap-2 items-center ${itemsPerScreen === 1 ? 'hidden' : ''}`}>
           <button onClick={scrollLeft} className='p-3 bg-black rounded-full cursor-pointer hover:scale-110 transition-transform hover:shadow-[0_0_12px_4px_rgba(59,130,246,0.6)]'>
             <FaArrowLeft />
           </button>
@@ -69,11 +69,13 @@ const CarouselSlide = ({ games, isError, isLoading }) => {
           </button>
         </div>
       </div>
-      <div className="w-full min-h-40 h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide">
+      <div className="w-full min-h-40 h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide sm:overflow-hidden">
         <div className="relative w-full h-full">
           <div
-            className="flex h-full transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }} // you'll control this later
+            className="flex h-full transition-transform duration-200 ease-out"
+            style={{
+              transform: `translateX(-${currentSlide * 100}%)`
+            }} // you'll control this later
           >
 
             {

@@ -28,6 +28,15 @@ const Hero = () => {
     fetchTrendingGames();
   }, []);
 
+  useEffect(() => {
+    console.log('Hero component mounting/re-mounting');
+    const fetchTrendingGames = async () => {
+      console.log('Hero: About to call getGames');
+      // ... rest of your code
+    };
+    fetchTrendingGames();
+  }, []);
+
   // Auto-slide functionality
   useEffect(() => {
     if (games.length === 0) return;
@@ -43,7 +52,6 @@ const Hero = () => {
   useEffect(() => {
     const handleResize = () => {
       const winSize = window.innerWidth
-      console.log(isWide)
       setIsWide(winSize > 900)
     }
 
@@ -51,9 +59,6 @@ const Hero = () => {
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
-  useEffect(() => { console.log(isWide) }, [isWide])
-
 
 
   const nextSlide = () => {
@@ -152,9 +157,9 @@ const CarouselSlide = ({ game, isActive, isWide }) => {
     <div
       className="flex-shrink-0 w-full bg-cover bg-center flex items-center relative rounded-2xl"
       style={{
-        aspectRatio: isWide? '5/2' : '',
-        paddingTop: isWide? '' : '2rem',
-        paddingBottom: isWide? '' : '4rem',
+        aspectRatio: isWide ? '5/2' : '',
+        paddingTop: isWide ? '' : '2rem',
+        paddingBottom: isWide ? '' : '4rem',
         backgroundImage: `linear-gradient(
           45deg, 
           rgba(0, 0, 0, 0.8) 0%, 
