@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import Hero from '../components/Hero'
 import NewReleases from '../components/NewReleases'
 import BestSellers from '../components/BestSellers'
+import FreeGames from '../components/FreeGames'
 
 const HomePage = () => {
   useEffect(() => {
@@ -12,6 +13,7 @@ const HomePage = () => {
         <Hero />
         <NewReleases />
         <BestSellers />
+        <FreeGames />
     </div>
   )
 }
