@@ -3,6 +3,7 @@ import Hero from '../components/Hero'
 import NewReleases from '../components/NewReleases'
 import BestSellers from '../components/BestSellers'
 import FreeGames from '../components/FreeGames'
+import IndieGames from '../components/IndieGames'
 
 const HomePage = () => {
   useEffect(() => {
@@ -14,6 +15,7 @@ const HomePage = () => {
         <NewReleases />
         <BestSellers />
         <FreeGames />
+        <IndieGames />
     </div>
   )
 }
