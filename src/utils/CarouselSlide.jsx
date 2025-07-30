@@ -23,6 +23,7 @@ const CarouselSlide = ({ games, isError, isLoading, sectionTitle }) => {
       // const total = Math.ceil(games.length / itemsPerScreen)
       
       // return total
+      setCurrentSlide(0) // this will adjust the or reset the scrolled bar , so that scrolled view and currentSlide ramain const
       if (itemsPerScreen === 3) {
         return 4
       } else if (itemsPerScreen === 2) {
