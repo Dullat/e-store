@@ -4,6 +4,8 @@ import NewReleases from '../components/NewReleases'
 import BestSellers from '../components/BestSellers'
 import FreeGames from '../components/FreeGames'
 import IndieGames from '../components/IndieGames'
+import PopularDevs from '../components/PopularDevs'
+import MobileGames from '../components/MobileGames'
 
 const HomePage = () => {
   useEffect(() => {
@@ -16,6 +18,10 @@ const HomePage = () => {
         <BestSellers />
         <FreeGames />
         <IndieGames />
+        <hr />
+        <PopularDevs />
+        <hr />
+        <MobileGames />
     </div>
   )
 }

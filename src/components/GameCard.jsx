@@ -86,8 +86,10 @@ const GameCard = ({ game }) => {
       {/* Content */}
       <div className="p-4 space-y-3">
         {/* Title */}
-        <h3 className="text-white font-bold text-lg leading-tight line-clamp-2 group-hover:text-purple-300 transition-colors duration-300">
-          {game.name}
+        <h3 className="text-white font-bold text-lg leading-tight line-clamp-2 group-hover:text-purple-300 transition-colors duration-300"
+        title={game.name}
+        >
+          {game.name.length > 15 ? `${game.name.slice(0,15).trim()}...`: game.name}
         </h3>
 
         {/* Genres */}
