@@ -42,12 +42,14 @@ const GameCard = ({ game }) => {
 
   return (
     <div
-      className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer w-full h-full"
+      className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer w-full h-full group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+
       {/* BG and slideshow */}
       <div className="relative aspect-[16/9] overflow-hidden">
+        <button className="absolute bottom-0 left-[50%] transform-gpu translate-x-[-50%] z-50 hidden group-hover:block mb-2 cursor-pointer bg-[rgba(51,134,243,0.5)] px-2 py-1 text-xs rounded hover:bg-[rgba(51,134,243,0.97)]">Add To Cart</button>
         <img
           src={getCurrentImage()}
           alt={game.name}
@@ -87,9 +89,9 @@ const GameCard = ({ game }) => {
       <div className="p-4 space-y-3">
         {/* Title */}
         <h3 className="text-white font-bold text-lg leading-tight line-clamp-2 group-hover:text-purple-300 transition-colors duration-300"
-        title={game.name}
+          title={game.name}
         >
-          {game.name.length > 15 ? `${game.name.slice(0,15).trim()}...`: game.name}
+          {game.name.length > 15 ? `${game.name.slice(0, 15).trim()}...` : game.name}
         </h3>
 
         {/* Genres */}
@@ -112,8 +114,8 @@ const GameCard = ({ game }) => {
 
           {game.metacritic && (
             <div className={`px-2 py-1 rounded-md text-xs font-bold ${game.metacritic >= 75 ? 'bg-green-600/80 text-white' :
-                game.metacritic >= 50 ? 'bg-yellow-600/80 text-white' :
-                  'bg-red-600/80 text-white'
+              game.metacritic >= 50 ? 'bg-yellow-600/80 text-white' :
+                'bg-red-600/80 text-white'
               }`}>
               {game.metacritic}
             </div>
