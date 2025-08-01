@@ -7,26 +7,18 @@ import GameCard from './components/GameCard.jsx'
 import RootLayout from './layouts/RootLayout.jsx'
 import HomePage from './pages/HomePage.jsx'
 import { CartProvider } from './context/CartProvider.jsx'
+import CartPage from './pages/CartPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} >
       <Route index element={<HomePage />} />
+      <Route path='/cart' element={<CartPage />} />
     </Route>
   )
 )
 
 function App() {
-  const [games, setGames] = useState([])
-  useEffect(() => {
-    const fetchGames = async () => {
-      const data = await getGames(`&ordering=-rating&page_size=5&dates=2023-01-01,2024-12-31`)
-      setGames(data.results)
-    }
-
-    fetchGames()
-  }, [])
-
   return (
     <CartProvider>
       <RouterProvider router={router}></RouterProvider>

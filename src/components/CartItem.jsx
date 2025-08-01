@@ -1,0 +1,40 @@
+import React, { useContext, useState } from 'react'
+import { CartContext } from '../context/CartProvider';
+
+const CartItem = ({ game }) => {
+    const {removeFromCart} = useContext(CartContext)
+    const [removeBtnText, setRemoveBtnText] = useState('Remove')
+    const addedDate = new Date(game.added_at);
+    const year = addedDate.getFullYear();
+    const month = String(addedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(addedDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+    const handleRemoveFromCart = () => {
+        setRemoveBtnText('Removing..')
+        removeFromCart(game.game_id)
+    }
+
+    return (
+        <div className='p-4 flex items-center gap-6 hover:bg-gray-700 rounded transition hover:scale-101 group'>
+            <div className="h-20 aspect-square rounded overflow-hidden">
+                <img src={game.game_bg} alt={game.game_name}
+                    className='
+                        h-full w-full bg-cover
+                        '/>
+            </div>
+            <div className="opacity-50 group-hover:opacity-100 flex flex-col gap-2 w-full">
+                <div className="font-bold text-xl ">{game.game_name}</div>
+                <div className="flex justify-between">
+                    <div className="opacity-50 w-fit text-center text-sm leading-none flex items-center">{`Added at : ${formattedDate}`}</div>
+                    <div className="flex gap-4">
+                        <button className='py-1 px-4 bg-blue-700 rounded w-fit'>Visit Page</button>
+                        <button onClick={handleRemoveFromCart} className='py-1 px-4 bg-red-700 rounded w-fit'>{removeBtnText}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CartItem

@@ -21,9 +21,27 @@ const CartProvider = ({ children }) => {
       console.log(`supabase insertion error : ${error}`)
     }
 
-    if(data){
+    if (data) {
+      getData()
       console.log(data)
-      return {success: 'inserted'}
+      return { success: 'inserted' }
+    }
+  }
+
+  const removeFromCart = async (gameID) => {
+    const { data, error } = await supabase
+      .from('cart_items')
+      .delete()
+      .eq('game_id', gameID)
+      .select() // this select is filling data and error
+    if (error) {
+      console.log('Supabase Error Deleting:', error)
+      return { error: 'cant delete data' }
+    }
+
+    if (data) {
+      console.log(data)
+      getData()
     }
   }
 
@@ -47,7 +65,7 @@ const CartProvider = ({ children }) => {
   }, [])
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   )

@@ -25,7 +25,7 @@ const AddToCart = ({ gameId, gameName, gameBg }) => {
 
     useEffect(() => {
         const checkStatus = () => {
-            isAdded === true ? setBtnText('Already in Cart') : ''
+            isAdded === true ? setBtnText('in Cart') : ''
         }
         checkStatus()
     }, [isAdded])
