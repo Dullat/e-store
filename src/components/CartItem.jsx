@@ -1,18 +1,20 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { CartContext } from '../context/CartProvider';
 
 const CartItem = ({ game }) => {
     const {removeFromCart} = useContext(CartContext)
     const [removeBtnText, setRemoveBtnText] = useState('Remove')
+    const removeBtnRef = useRef(null)
     const addedDate = new Date(game.added_at);
     const year = addedDate.getFullYear();
     const month = String(addedDate.getMonth() + 1).padStart(2, '0');
     const day = String(addedDate.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
-    const handleRemoveFromCart = () => {
+    const handleRemoveFromCart = async () => {
         setRemoveBtnText('Removing..')
-        removeFromCart(game.game_id)
+        removeBtnRef.current.disabled = true
+        await removeFromCart(game.game_id)
     }
 
     return (
@@ -29,7 +31,7 @@ const CartItem = ({ game }) => {
                     <div className="opacity-50 w-fit text-center text-sm leading-none flex items-center">{`Added at : ${formattedDate}`}</div>
                     <div className="flex gap-4">
                         <button className='py-1 px-4 bg-blue-700 rounded w-fit'>Visit Page</button>
-                        <button onClick={handleRemoveFromCart} className='py-1 px-4 bg-red-700 rounded w-fit'>{removeBtnText}</button>
+                        <button ref={removeBtnRef} onClick={handleRemoveFromCart} className='py-1 px-4 bg-red-700 rounded w-fit'>{removeBtnText}</button>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,7 @@ const CartProvider = ({ children }) => {
     }
 
     if (data) {
-      getData()
+      await getData()   // we should await here for correct order of return and log
       console.log(data)
       return { success: 'inserted' }
     }
@@ -41,7 +41,7 @@ const CartProvider = ({ children }) => {
 
     if (data) {
       console.log(data)
-      getData()
+      await getData()
     }
   }
 

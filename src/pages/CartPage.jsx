@@ -15,7 +15,7 @@ const CartPage = () => {
             <div className="flex flex-col gap-4 w-full">
                 {
                     filteredCart.map(item => (
-                        <CartItem key={item.game_id} game={item} />
+                        <CartItem key={item.id} game={item} />
                     ))
                 }
             </div>
