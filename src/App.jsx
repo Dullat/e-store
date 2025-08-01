@@ -6,6 +6,7 @@ import getGames from './data/getGames.js'
 import GameCard from './components/GameCard.jsx'
 import RootLayout from './layouts/RootLayout.jsx'
 import HomePage from './pages/HomePage.jsx'
+import { CartProvider } from './context/CartProvider.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +28,9 @@ function App() {
   }, [])
 
   return (
-    <RouterProvider router={router}></RouterProvider>
+    <CartProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </CartProvider>
   )
 }
 

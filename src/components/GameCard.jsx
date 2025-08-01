@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AddToCart from './AddToCart';
 
 const GameCard = ({ game }) => {
   const [currentScreenshot, setCurrentScreenshot] = useState(0);
@@ -49,7 +50,7 @@ const GameCard = ({ game }) => {
 
       {/* BG and slideshow */}
       <div className="relative aspect-[16/9] overflow-hidden">
-        <button className="absolute bottom-0 left-[50%] transform-gpu translate-x-[-50%] z-50 hidden group-hover:block mb-2 cursor-pointer bg-[rgba(51,134,243,0.5)] px-2 py-1 text-xs rounded hover:bg-[rgba(51,134,243,0.97)]">Add To Cart</button>
+        <AddToCart gameId={game.id} gameName={game.name} gameBg={game.background_image} />
         <img
           src={getCurrentImage()}
           alt={game.name}
