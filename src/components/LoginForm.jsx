@@ -5,7 +5,7 @@ import { supabase } from "../lib/supabaseClient";
 
 
 const LoginForm = () => {
-    const { signUp, signIn } = useContext(AuthContext)
+    const { signUp, signIn, user } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
     const [mode, setMode] = useState('sign-up')
@@ -53,6 +53,8 @@ const LoginForm = () => {
         setError(null)
         setMode((prev) => prev === 'sign-up' ? 'sign-in' : 'sign-up')
     }
+
+    if(user) return <p className="text-2xl font-bold text-center mt-10">don't be too smart bro..... <br /><br /><br />You are Already an user <br />So, go back to Home </p>
 
     return (
 
