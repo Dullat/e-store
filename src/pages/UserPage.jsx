@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthProvider'
 import { supabase } from '../lib/supabaseClient'
 import AvatarUpload from '../components/AvatarUpload'
+import { Link } from 'react-router-dom'
 
 const UserPage = () => {
-  const { user, userProfile, updateAvatarUrl } = useContext(AuthContext)
+  const { user, userProfile, updateAvatarUrl, signOut } = useContext(AuthContext)
   const [userName, setUserName] = useState('')
   const [updateMode, setUpdateMode] = useState(false)
   const [updatingAvatar, setUpdatingAvatar] = useState(false)
@@ -17,10 +18,10 @@ const UserPage = () => {
       console.log(data);
     }
 
-    if(userProfile?.user_name){
+    if (userProfile?.user_name) {
       console.log('updating........')
       const { data, error } = await supabase.from('profiles').update({ user_name: userName }).eq('id', userProfile.id).select()
-      if(!error){
+      if (!error) {
         setUpdateMode(false)
       }
     }
@@ -30,7 +31,14 @@ const UserPage = () => {
     setUpdatingAvatar(true)
   }
 
-  if (!user) return 'loading'
+  if (!user) return (
+    <div className="grid place-content-center w-full">
+      <div className="mt-20 flex flex-col gap-6">
+        <p>Bruh you need to log-in...</p>
+        <Link to="/login" className='w-full bg-blue-600 hover:bg-blue-700 text-white  text-center font-semibold py-2 px-4 rounded-md transition-all duration-150'>Click me Bruhh..</Link>
+      </div>
+    </div>
+  )
   return (
     <div className='max-w-[800px] m-auto p-1'>
       <div className="flex flex-col gap-4 mb-4 text-sm sm:text-base p-1">
@@ -86,7 +94,6 @@ const UserPage = () => {
         <button onClick={() => setUpdateMode(prev => !prev)}
           className='text-blue-600 text-xs md:text-sm text-center w-full cursor-pointer'
         >{updateMode ? `Changed your mind? go back to normal mode` : `Wanna Change ur profile ?`}</button>
-
       </div>
 
       {
@@ -94,6 +101,10 @@ const UserPage = () => {
           <AvatarUpload userId={user.id} onUpload={updateAvatarUrl} onClose={setUpdatingAvatar} />
         ) : ''
       }
+
+      <button onClick={signOut}
+        className='text-red-600 text-xs md:text-sm text-center cursor-pointer mr-auto w-fit'
+      >Log-out</button>
     </div>
   )
 }
