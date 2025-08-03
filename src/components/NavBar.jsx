@@ -4,6 +4,7 @@ import { useContext } from "react"
 import { AuthContext } from "../context/AuthProvider"
 
 const NavBar = () => {
+    const {userProfile} = useContext(AuthContext)
     const {user} = useContext(AuthContext)
     return (
         <div className='text-white flex justify-between items-center p-4 *:flex *:items-center bg-[#0e0e10]'>
@@ -20,13 +21,16 @@ const NavBar = () => {
                 </NavLink>
             </nav>
             <div className="gap-6">
-                <Link to="/">
-                    <FaGlobe size={24} color="#555" title="language" />
-                </Link>
-                <Link to="/">
-                    <FaUser size={24} color="#555" title="User" />
+                <Link to="/user">
                     {
-                        user?.email
+                        userProfile?.avatar ? (
+                            <img src={userProfile.avatar} alt="user" 
+                            className="h-8 w-8 object-cover rounded-full"
+                            />
+                        ):
+                        (
+                            <FaUser size={24} color="#555" title="User" />
+                        )
                     }
                 </Link>
             </div>
