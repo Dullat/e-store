@@ -8,6 +8,7 @@ import RootLayout from './layouts/RootLayout.jsx'
 import HomePage from './pages/HomePage.jsx'
 import { CartProvider } from './context/CartProvider.jsx'
 import CartPage from './pages/CartPage.jsx'
+import AuthProvider from './context/AuthProvider.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,9 +21,11 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <CartProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </CartProvider>
+    </AuthProvider>
   )
 }
 
