@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { supabase } from "../lib/supabaseClient";
 
@@ -11,15 +11,37 @@ const LoginForm = () => {
     const [mode, setMode] = useState('sign-up')
     const [error, setError] = useState(null)
 
+    const navigate = useNavigate()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (mode === 'sign-up') {
             const { data, error } = await signUp(email, pass)
+            if (data?.user && !data.session && data.user.identities?.length === 0) {
+                setError('Already a user : Try log-in')
+            }
+
+            if (data?.user && data.session) {
+                navigate("/user")
+            }
         }
 
         if (mode === 'sign-in') {
             const { data, error } = await signIn(email, pass)
+            console.log(data, error)
+            if (!error) {
+                navigate('/')
+            }
+
+            if(error){
+                setError(error)
+            }
         }
+    }
+
+    const handleMode = () => {
+        setError(null)
+        setMode((prev) => prev === 'sign-up' ? 'sign-in' : 'sign-up')
     }
 
     return (
@@ -30,6 +52,13 @@ const LoginForm = () => {
                     mode === 'sign-up' ? 'Create Account' : 'Log in'
                 }
             </p>
+            {
+                error && (
+                    <div className="py-1 px-2 bg-red-500 text-white rounded w-full my-2 mb-6 opacity-80 text-sm">
+                        {`⚠️ ${error}`}
+                    </div>
+                )
+            }
             <form onSubmit={handleSubmit} className="flex flex-col gap-8 *:flex *:flex-col *:gap-1">
                 <div className="">
                     <label className="opacity-70 text-sm">Email</label>
@@ -63,7 +92,7 @@ const LoginForm = () => {
                                 )
                         }
 
-                        <button onClick={() => setMode((prev) => prev === 'sign-up' ? 'sign-in' : 'sign-up')} type="button"
+                        <button onClick={handleMode} type="button"
                             className="text-blue-700 cursor-pointer"
                         >
                             {mode === 'sign-in' ? 'Create Account' : 'Log-in'}
