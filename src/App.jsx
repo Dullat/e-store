@@ -9,12 +9,16 @@ import HomePage from './pages/HomePage.jsx'
 import { CartProvider } from './context/CartProvider.jsx'
 import CartPage from './pages/CartPage.jsx'
 import AuthProvider from './context/AuthProvider.jsx'
+import LoginForm from './components/LoginForm.jsx'
+import UserPage from './pages/UserPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} >
       <Route index element={<HomePage />} />
       <Route path='/cart' element={<CartPage />} />
+      <Route path='/login' element={<LoginForm />} />
+      <Route path='/user' element={<UserPage />} />
     </Route>
   )
 )
