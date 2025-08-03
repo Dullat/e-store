@@ -23,7 +23,7 @@ const CartProvider = ({ children }) => {
 
     if (data) {
       await getData()   // we should await here for correct order of return and log
-      console.log(data)
+      // console.log(data)
       return { success: 'inserted' }
     }
   }

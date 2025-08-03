@@ -10,7 +10,7 @@ const API_OPTIONS = {
 
 const getGames = async (prefs) => {
     try {
-        console.log(prefs, "loggin ggg")
+        // console.log(prefs, "loggin ggg")
         const url = `https://api.rawg.io/api/games?key=${API_KEY}${prefs}`;
         const response = await fetch(url);
         if (!response.ok) {

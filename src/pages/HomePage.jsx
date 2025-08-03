@@ -11,12 +11,6 @@ import { CartContext } from '../context/CartProvider'
 
 const HomePage = () => {
   const {cart} = useContext(CartContext)
-  useEffect(() => {
-console.log(cart, 'jhjh')
-  },[cart])
-  useEffect(() => {
-    console.log('HomePage mounted')
-  }, [])
   return (
     <div className='max-w-[1200px] m-auto'>
         <Hero />

@@ -1,7 +1,10 @@
 import { Link, NavLink } from "react-router-dom"
 import { FaGlobe, FaUser } from "react-icons/fa"
+import { useContext } from "react"
+import { AuthContext } from "../context/AuthProvider"
 
 const NavBar = () => {
+    const {user} = useContext(AuthContext)
     return (
         <div className='text-white flex justify-between items-center p-4 *:flex *:items-center bg-[#0e0e10]'>
             <div className="text-2xl">Dullat Store</div>
@@ -22,6 +25,9 @@ const NavBar = () => {
                 </Link>
                 <Link to="/">
                     <FaUser size={24} color="#555" title="User" />
+                    {
+                        user?.email
+                    }
                 </Link>
             </div>
         </div>

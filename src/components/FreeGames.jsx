@@ -10,7 +10,7 @@ const FreeGames = () => {
         const getData = async () => {
             try {
                 const data = await getGames(freeGamesPrefs)
-                console.log(data.results)
+                // console.log(data.results)
                 setGames(data.results)
             } catch (error) {
                 console.log(`Error form Free games: ${error}`)
