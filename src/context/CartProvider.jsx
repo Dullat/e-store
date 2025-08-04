@@ -1,34 +1,43 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
+import { AuthContext } from './AuthProvider'
 
 const CartContext = createContext()
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([])
+  const [cartStatus, setCartStatus] = useState(false)
+  const { userProfile } = useContext(AuthContext)
+  const [cartId, setCartId] = useState(null)
 
   const addToCart = async (gameId, gameName, gameBg) => {
-    const { data, error } = await supabase
-      .from('cart_items')
-      .insert([
-        {
-          game_id: gameId,
-          cart_id: 12,
-          game_name: gameName,
-          game_bg: gameBg
-        }
-      ]).select()
-    if (error) {
-      console.log(`supabase insertion error : ${error}`)
-    }
+    if (cartId !== null) {
+      const { data, error } = await supabase
+        .from('cart_items')
+        .insert([
+          {
+            game_id: gameId,
+            cart_id: cartId,
+            game_name: gameName,
+            game_bg: gameBg
+          }
+        ]).select()
+      if (error) {
+        console.log(`supabase insertion error : ${error}`)
+      }
 
-    if (data) {
-      await getData()   // we should await here for correct order of return and log
-      // console.log(data)
-      return { success: 'inserted' }
+      if (data) {
+        await getData()   // we should await here for correct order of return and log
+        // console.log(data)
+        return { success: 'inserted' }
+      }
+    } else {
+      console.warn('No cart_id')
     }
   }
 
   const removeFromCart = async (gameID) => {
+    if (!cartId) return
     const { data, error } = await supabase
       .from('cart_items')
       .delete()
@@ -46,10 +55,11 @@ const CartProvider = ({ children }) => {
   }
 
   const getData = async () => {
+    if (!cartId) return
     const { data, error } = await supabase
       .from('cart_items')
       .select('*')
-      .eq('cart_id', 12)
+      .eq('cart_id', cartId)
 
     if (error) {
       console.log('Supabase Error:', error)
@@ -60,12 +70,39 @@ const CartProvider = ({ children }) => {
     setCart(data)
   }
 
+  const checkCartStatus = async () => {
+    if (userProfile?.id) {
+      const { data: isCart, error } = await supabase.from('carts').select('*').eq('user_id', userProfile.id).single()
+
+      if (isCart !== null) {
+        console.log(isCart.id, 'cart id');
+        setCartId(isCart.id)
+        setCartStatus(true)
+      }
+
+      if (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkCartStatus()
+  }, [userProfile?.id])
+
   useEffect(() => {
     getData()
-  }, [])
+  }, [cartId])
+
+  useEffect(() => {
+    if (!userProfile?.id) {
+      setCartId(null)
+      setCart(null)
+    }
+  }, [userProfile])
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, cartStatus, getData, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   )
