@@ -43,6 +43,24 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // to update user data
+  const getUser = async () => {
+    if (user?.id) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id);
+      if (error) {
+        return { data: null, error: error };
+      } else {
+        console.log(data, 'got the id');
+        return { data: data, error: null };
+      }
+    }
+    return { data: null, error: null };
+  };
+
+
   const signUp = async (email, password) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     return { data, error };
@@ -63,6 +81,8 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{
       user,
       userProfile,
+      setUserProfile,
+      getUser,
       signIn,
       signUp,
       signOut,

@@ -5,7 +5,7 @@ import AvatarUpload from '../components/AvatarUpload'
 import { Link } from 'react-router-dom'
 
 const UserPage = () => {
-  const { user, userProfile, updateAvatarUrl, signOut } = useContext(AuthContext)
+  const { user, setUserProfile, getUser, userProfile, updateAvatarUrl, signOut } = useContext(AuthContext)
   const [userName, setUserName] = useState('')
   const [updateMode, setUpdateMode] = useState(false)
   const [updatingAvatar, setUpdatingAvatar] = useState(false)
@@ -15,6 +15,12 @@ const UserPage = () => {
     if (userProfile === null) {
       console.log('its null')
       const { data, error } = await supabase.from('profiles').insert([{ id: user.id, user_name: userName }]).select()
+      if(!error){
+        const {data: cart} = await supabase.from('carts').insert([{user_id: user.id}])
+        console.log(cart)
+        const {data: user} = await getUser()
+        setUserProfile(user[0])
+      }
       console.log(data);
     }
 
@@ -23,6 +29,8 @@ const UserPage = () => {
       const { data, error } = await supabase.from('profiles').update({ user_name: userName }).eq('id', userProfile.id).select()
       if (!error) {
         setUpdateMode(false)
+        const {data: user} = await getUser()
+        setUserProfile(user[0])
       }
     }
   }
