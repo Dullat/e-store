@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, Plus, Star } from 'lucide-react';
 import getGames from '../data/getGames';
+import AddToCart from './AddToCart';
 
 const Hero = () => {
   const [games, setGames] = useState([]);
@@ -25,15 +26,6 @@ const Hero = () => {
       }
     };
 
-    fetchTrendingGames();
-  }, []);
-
-  useEffect(() => {
-    console.log('Hero component mounting/re-mounting');
-    const fetchTrendingGames = async () => {
-      console.log('Hero: About to call getGames');
-      // ... rest of your code
-    };
     fetchTrendingGames();
   }, []);
 
@@ -81,7 +73,7 @@ const Hero = () => {
   );
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden p-4">
       {/* Main Carousel */}
       <div className="relative w-full h-4/5 overflow-hidden rounded-2xl">
         <div
@@ -99,7 +91,7 @@ const Hero = () => {
         </div>
 
         {/* Navigation Arrows */}
-        <button
+        {/* <button
           className="absolute left-8 top-1/2 -translate-y-1/2 w-8 h-8 cursor-pointer bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
           onClick={prevSlide}
         >
@@ -110,14 +102,14 @@ const Hero = () => {
           onClick={nextSlide}
         >
           <ChevronRight size={15} />
-        </button>
+        </button> */}
 
         {/* Slide Indicators */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
           {games.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide
                 ? 'bg-blue-500 scale-125'
                 : 'bg-white/40 hover:bg-white/60'
                 }`}
@@ -178,7 +170,7 @@ const CarouselSlide = ({ game, isActive, isWide }) => {
           </div>
 
           {/* Game Title */}
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-lg">
+          <h1 className="text-2xl md:text-4xl font-bold mb-4 drop-shadow-lg">
             {game.name}
           </h1>
 
@@ -192,7 +184,7 @@ const CarouselSlide = ({ game, isActive, isWide }) => {
           </div>
 
           {/* Description */}
-          <p className="text-md leading-relaxed mb-8 text-gray-100">
+          <p className="text-sm sm:text-md leading-relaxed mb-8 text-gray-100">
             {game.description_raw?.slice(0, 150) || 'Experience the ultimate gaming adventure with stunning visuals and immersive gameplay that will keep you engaged for hours.'}...
           </p>
 
@@ -202,10 +194,11 @@ const CarouselSlide = ({ game, isActive, isWide }) => {
               <Play size={20} />
               {game.price ? `$${game.price}` : 'Play Free'}
             </button>
-            <button className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 px-6 py-2 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm">
+            <AddToCart gameId={game.id} gameName={game.name} gameBg={game.background_image || game.short_screenshots?.[0]?.image} type={'from-hero'} />
+            {/* <button className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 px-6 py-2 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm">
               <Plus size={20} />
               Add to Wishlist
-            </button>
+            </button> */}
           </div>
 
           {/* Genre Tags */}
