@@ -17,7 +17,7 @@ const CartPage = () => {
     if (userProfile?.id && !cartStatus) return <MissingCart />
 
     return (
-        <div className='w-full p-4 max-w-[900px] m-auto'>
+        <div className='w-full p-4 max-w-[900px] m-auto min-h-screen'>
             <p className='text-2xl font-bold my-4'>Your Cart</p>
             <div className="flex flex-col gap-4 w-full">
                 {

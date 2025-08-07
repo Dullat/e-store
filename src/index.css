@@ -41,3 +41,21 @@
     left: 120%;
   }
 }
+
+@keyframes slideInSidebar {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideInSidebar 0.26s cubic-bezier(.66,.02,.6,1.03);
+}

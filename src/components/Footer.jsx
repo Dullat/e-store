@@ -1,7 +1,7 @@
 import { FaGithub, FaLink } from "react-icons/fa";
 
 const Footer = () => (
-    <footer className="bg-[#18181c] text-zinc-300 border-t border-zinc-600/30 px-6 py-10 mt-16">
+    <footer className="bg-[#18181c] text-zinc-300 border-t border-zinc-600/30 px-6 py-10 mt-auto">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div>
                 <h2 className="text-lg font-bold text-white mb-1 tracking-wide select-none">e-Store Project</h2>
