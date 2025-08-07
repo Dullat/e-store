@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Play, Plus, Star } from 'lucide-react';
 import getGames from '../data/getGames';
 import AddToCart from './AddToCart';
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 const Hero = () => {
   const [games, setGames] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const intervalRef = useRef(null)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isWide, setIsWide] = useState(window.innerWidth >= 900)
@@ -30,16 +31,22 @@ const Hero = () => {
     fetchTrendingGames();
   }, []);
 
-  // Auto-slide functionality
+  // Auto-slide
+
+  const startAutoSlide = () => {
+    clearInterval(intervalRef.current)
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide(prev => (prev + 1) % games.length);
+    }, 5000)
+  }
+
   useEffect(() => {
     if (games.length === 0) return;
 
-    const interval = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % games.length);
-    }, 5000);
+    startAutoSlide()
 
-    return () => clearInterval(interval);
-  }, [games.length]);
+    return () => clearInterval(intervalRef.current);
+  }, [games.length, currentSlide]);
 
   // Thumbnail conditional rendering
   useEffect(() => {
@@ -63,8 +70,9 @@ const Hero = () => {
   };
 
   const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
+    setCurrentSlide(index)
+    startAutoSlide()
+  }
 
   if (loading) return <HeroSkeleton />;
   if (error) return (

@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { CartContext } from '../context/CartProvider';
+import { Link } from 'react-router-dom';
 
 const CartItem = ({ game }) => {
     const {removeFromCart} = useContext(CartContext)
@@ -30,7 +31,7 @@ const CartItem = ({ game }) => {
                 <div className="flex justify-between">
                     <div className="opacity-50 w-fit text-center text-sm leading-none flex items-center">{`Added at : ${formattedDate}`}</div>
                     <div className="flex gap-4">
-                        <button className='py-1 px-4 bg-blue-700 rounded w-fit'>Visit Page</button>
+                        <Link to={`/game/${game.game_id}`} className='py-1 px-4 bg-blue-700 rounded w-fit'>Visit Page</Link>
                         <button ref={removeBtnRef} onClick={handleRemoveFromCart} className='py-1 px-4 bg-red-700 rounded w-fit'>{removeBtnText}</button>
                     </div>
                 </div>

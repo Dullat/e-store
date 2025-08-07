@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AddToCart from './AddToCart';
+import { Link } from 'react-router-dom';
 
 const GameCard = ({ game }) => {
   const [currentScreenshot, setCurrentScreenshot] = useState(0);
@@ -42,6 +43,7 @@ const GameCard = ({ game }) => {
   };
 
   return (
+    <Link to={`game/${game.id}`}>
     <div
       className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer w-full h-full group"
       onMouseEnter={() => setIsHovered(true)}
@@ -145,6 +147,7 @@ const GameCard = ({ game }) => {
       {/* BG glow */}
       <div className="absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-purple-500/30 transition-colors duration-300 pointer-events-none"></div>
     </div>
+    </Link>
   );
 };
 

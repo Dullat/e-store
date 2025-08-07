@@ -11,20 +11,20 @@ const CartPage = () => {
 
     useEffect(() => {
         setFilteredCart(cart)
-    }, [cart])
+    }, [cart, cartStatus])
 
     if (!userProfile?.id && !cartStatus) return 'no cart initilized'
-    if(userProfile?.id && !cartStatus) return <MissingCart />
+    if (userProfile?.id && !cartStatus) return <MissingCart />
 
     return (
         <div className='w-full p-4 max-w-[900px] m-auto'>
             <p className='text-2xl font-bold my-4'>Your Cart</p>
             <div className="flex flex-col gap-4 w-full">
                 {
-                    cart.length === 0 && <p className='mt-20 m-auto opacity-60 text-sm '>Cart is Empty, Try adding some games...</p>
+                    cart && cart.length === 0 && <p className='mt-20 m-auto opacity-60 text-sm '>Cart is Empty, Try adding some games...</p>
                 }
                 {
-                    filteredCart.map(item => (
+                    filteredCart && filteredCart.map(item => (
                         <CartItem key={item.id} game={item} />
                     ))
                 }
@@ -37,11 +37,11 @@ export default CartPage
 
 const MissingCart = () => {
     const { getData } = useContext(CartContext)
-    const {userProfile} = useContext(AuthContext)
+    const { userProfile } = useContext(AuthContext)
     const createCart = async () => {
         const { data: cart } = await supabase.from('carts').insert([{ user_id: userProfile.id }]).select()
         console.log(cart);
-        
+
         getData()
     }
 

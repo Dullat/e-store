@@ -7,7 +7,9 @@ const AddToCart = ({ gameId, gameName, gameBg, type = '' }) => {
     const [isAdded, setIsAdded] = useState(false)
     const { cart, addToCart } = useContext(CartContext)
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         setBtnText("adding...")
         const res = await addToCart(gameId, gameName, gameBg)
         if (res.success) {

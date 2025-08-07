@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import GameHero from '../components/GameHero'
 import { Link, useParams } from 'react-router-dom'
 import AddToCart from '../components/AddToCart'
+import GamePageSkeleton from '../components/GamePageLoadingSkel'
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY
 
 const GamePage = () => {
@@ -74,7 +75,7 @@ const GamePage = () => {
         }
     }, [showFull, game.description, loading]);
 
-    if (loading) return 'loading..............'
+    if (loading) return <GamePageSkeleton />
     return (
         <div className='max-w-[1200px] m-auto p-4 flex flex-col'>
             <h1 className='text-xl md:text-2xl lg:text-3xl font-bold text-white my-4'>{game.name}</h1>
