@@ -64,7 +64,7 @@ const SearchSection = () => {
                         ">
                             {
                                 searchResults.map(item => (
-                                    <Link key={item.id} to='' className='p-2 px-4 hover:bg-zinc-800 rounded text-gray-400 hover:text-gray-50'>
+                                    <Link key={item.id} to={`/game/${item.id}`} className='p-2 px-4 hover:bg-zinc-800 rounded text-gray-400 hover:text-gray-50'>
                                         {item.name}
                                     </Link>
                                 ))

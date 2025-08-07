@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, Plus, Star } from 'lucide-react';
 import getGames from '../data/getGames';
 import AddToCart from './AddToCart';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [games, setGames] = useState([]);
@@ -185,15 +186,15 @@ const CarouselSlide = ({ game, isActive, isWide }) => {
 
           {/* Description */}
           <p className="text-sm sm:text-md leading-relaxed mb-8 text-gray-100">
-            {game.description_raw?.slice(0, 150) || 'Experience the ultimate gaming adventure with stunning visuals and immersive gameplay that will keep you engaged for hours.'}...
+            {game.description_raw || 'Experience the ultimate gaming adventure. Play Now'}...
           </p>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
-            <button className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+            <Link to={`/game/${game.id}`} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl">
               <Play size={20} />
               {game.price ? `$${game.price}` : 'Play Free'}
-            </button>
+            </Link>
             <AddToCart gameId={game.id} gameName={game.name} gameBg={game.background_image || game.short_screenshots?.[0]?.image} type={'from-hero'} />
             {/* <button className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-2 border-white/30 hover:border-white/50 px-6 py-2 rounded-lg font-semibold transition-all duration-300 backdrop-blur-sm">
               <Plus size={20} />

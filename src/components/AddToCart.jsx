@@ -30,6 +30,16 @@ const AddToCart = ({ gameId, gameName, gameBg, type = '' }) => {
         }
         checkStatus()
     }, [isAdded])
+
+    if (type === 'from-game') return (
+        <button
+            disabled={isAdded} onClick={handleAddToCart}
+            className={`flex items-center justify-center gap-2 py-2 max-w-full bg-black text-white rounded ${isAdded ? 'cursor-not-allowed opacity-70 bg-gray-400' : 'cursor-pointer bg-[rgba(51,134,243,0.5)] hover:bg-[rgba(51,134,243,0.97)]'}`}>
+            <Plus size={20} />
+            {btnText}
+        </button>
+    )
+
     if (type === 'from-hero') return (
         <button
             disabled={isAdded} onClick={handleAddToCart}

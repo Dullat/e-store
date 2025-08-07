@@ -11,6 +11,7 @@ import CartPage from './pages/CartPage.jsx'
 import AuthProvider from './context/AuthProvider.jsx'
 import LoginForm from './components/LoginForm.jsx'
 import UserPage from './pages/UserPage.jsx'
+import GamePage from './pages/GamePage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<CartPage />} />
       <Route path='/login' element={<LoginForm />} />
       <Route path='/user' element={<UserPage />} />
+      <Route path='/game/:id' element={<GamePage />} />
     </Route>
   )
 )
