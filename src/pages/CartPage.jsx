@@ -24,7 +24,7 @@ const CartPage = () => {
     return (
         <div className='w-full p-4 max-w-[900px] m-auto min-h-screen'>
             <ScrollToTop />
-            <p className='text-2xl font-bold my-4'>Your Cart</p>
+            <p className='text-2xl font-bold sm:my-4'>Your Cart</p>
             <div className="flex flex-col gap-4 w-full">
                 {
                     cart && cart.length === 0 && <p className='mt-20 m-auto opacity-60 text-sm '>Cart is Empty, Try adding some games...</p>
