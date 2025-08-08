@@ -13,7 +13,11 @@ const CartPage = () => {
         setFilteredCart(cart)
     }, [cart, cartStatus])
 
-    if (!userProfile?.id && !cartStatus) return 'no cart initilized'
+    if (!userProfile?.id && !cartStatus) return (
+        <div className="w-full grid place-content-center mt-8">
+            <p>Cart not initialized...</p>
+        </div>
+    )
     if (userProfile?.id && !cartStatus) return <MissingCart />
 
     return (
