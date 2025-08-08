@@ -32,7 +32,7 @@ const SearchSection = () => {
 
     useEffect(() => {
         const handleClickOutSide = (e) => {
-            if(searchRef.current && !searchRef.current.contains(e.target)){
+            if (searchRef.current && !searchRef.current.contains(e.target)) {
                 setIsVisible(false)
             }
         }
@@ -64,7 +64,7 @@ const SearchSection = () => {
                         ">
                             {
                                 searchResults.map(item => (
-                                    <Link key={item.id} to={`/game/${item.id}`} className='p-2 px-4 hover:bg-zinc-800 rounded text-gray-400 hover:text-gray-50'>
+                                    <Link onClick={() => setIsVisible(prev => !prev)} key={item.id} to={`./game/${item.id}`} className='p-2 px-4 hover:bg-zinc-800 rounded text-gray-400 hover:text-gray-50'>
                                         {item.name}
                                     </Link>
                                 ))

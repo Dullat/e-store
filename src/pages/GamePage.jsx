@@ -54,7 +54,7 @@ const GamePage = () => {
 
 
         fetchMedia()
-    }, [])
+    }, [id])
 
     const handleDes = () => {
         setShowFull(prev => !prev)

@@ -8,11 +8,13 @@ import PopularDevs from '../components/PopularDevs'
 import MobileGames from '../components/MobileGames'
 import AddToCart from '../components/AddToCart'
 import { CartContext } from '../context/CartProvider'
+import SearchSection from '../components/SearchSection'
 
 const HomePage = () => {
   const {cart} = useContext(CartContext)
   return (
     <div className='max-w-[1200px] m-auto'>
+        {/* <SearchSection /> */}
         <Hero />
         <NewReleases />
         <BestSellers />
