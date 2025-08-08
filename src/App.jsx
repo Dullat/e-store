@@ -12,6 +12,7 @@ import AuthProvider from './context/AuthProvider.jsx'
 import LoginForm from './components/LoginForm.jsx'
 import UserPage from './pages/UserPage.jsx'
 import GamePage from './pages/GamePage.jsx'
+import ToastProvider from './context/ToastProvider.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,9 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <RouterProvider router={router}></RouterProvider>
+        <ToastProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </ToastProvider>
       </CartProvider>
     </AuthProvider>
   )

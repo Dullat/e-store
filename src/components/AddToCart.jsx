@@ -1,19 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../context/CartProvider'
 import { Plus } from 'lucide-react'
+import { AuthContext } from '../context/AuthProvider'
+import { useToast } from '../context/ToastProvider'
 
 const AddToCart = ({ gameId, gameName, gameBg, type = '' }) => {
     const [btnText, setBtnText] = useState('Add to Cart')
     const [isAdded, setIsAdded] = useState(false)
     const { cart, addToCart } = useContext(CartContext)
+    const {userProfile} = useContext(AuthContext)
+    const showToast = useToast()
 
     const handleAddToCart = async (e) => {
         e.stopPropagation();
         e.preventDefault();
+        if(userProfile === null) {
+            console.log('oops no user profile created yet....')
+            showToast({message: "Create Account Bruh..", type: 'warn'})
+            return
+        }
         setBtnText("adding...")
         const res = await addToCart(gameId, gameName, gameBg)
         if (res.success) {
             setIsAdded(true)
+            showToast({message: 'Added...', type: 'success'})
         } else {
             console.log("error");
         }
