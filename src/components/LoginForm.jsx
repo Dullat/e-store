@@ -119,6 +119,10 @@ const LoginForm = () => {
                     </form >
                 )
             }
+
+            <p className="text-center text-green-600 text-sm mt-5">if dont want to create an account, use this dummy account.. <br />
+            Email : lzb4jjunj2@mrotzis.com <br />
+            pass: lzb4jjunj2@mrotzis.com</p>
         </div >
     );
 }
