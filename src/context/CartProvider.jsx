@@ -33,6 +33,7 @@ const CartProvider = ({ children }) => {
       }
     } else {
       console.warn('No cart_id')
+      checkCartStatus()
     }
   }
 
@@ -104,7 +105,7 @@ const CartProvider = ({ children }) => {
       setCartId(null)
       setCart(null)
     }
-  }, [userProfile])
+  }, [userProfile?.id])
 
   return (
     <CartContext.Provider value={{ cart, cartStatus, getData, addToCart, removeFromCart }}>

@@ -19,18 +19,18 @@ const NavBar = () => {
 
         function handleOutsideClick(e) {
             if (!asideRef.current || !burgerRef.current) return;
-            if(burgerRef.current.contains(e.target)) return
+            if (burgerRef.current.contains(e.target)) return
             if (
-                
+
                 e.target.contains(asideRef.current) // true : asideRef.current.contains(asideRef.current) -> true
-            ) {     
-                console.log('hahah')          
+            ) {
+                console.log('hahah')
                 return;
-            }else{
+            } else {
 
                 console.log('setting false');
-                
-            setIsOpen(false);
+
+                setIsOpen(false);
             }
         }
         window.addEventListener('click', handleOutsideClick);
@@ -124,10 +124,14 @@ const Avatar = ({ userProfile, user, isOnPath, fromSideBar = false }) => {
                                     )
                                 ) :
                                     (
-                                        <div className="flex items-center gap-2" title="why waste ur life , login now">
-                                            <FaUser size={24} color="#555" title="User" />
-                                            <p className="py-1 px-2 bg-blue-600 rounded">Log-In</p>
-                                        </div>
+                                        user ? (
+                                            <p className="py-1 px-2 bg-blue-600 rounded">Set Profile</p>
+                                        ) : (
+                                            <div className="flex items-center gap-2" title="why waste ur life , login now">
+                                                <FaUser size={24} color="#555" title="User" />
+                                                <p className="py-1 px-2 bg-blue-600 rounded">Log-In</p>
+                                            </div>
+                                        )
                                     )
                             }
                         </Link>
