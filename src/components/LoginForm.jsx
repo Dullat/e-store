@@ -8,7 +8,7 @@ const LoginForm = () => {
     const { signUp, signIn, user } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
-    const [mode, setMode] = useState('sign-up')
+    const [mode, setMode] = useState('sign-in')
     const [error, setError] = useState(null)
     const [conformation, setConformation] = useState(null)
 
@@ -58,7 +58,7 @@ const LoginForm = () => {
 
     return (
 
-        <div className="max-w-[400px] m-auto mt-10">
+        <div className="max-w-[400px] m-auto mt-10 p-4">
             <p className="text-2xl font-bold my-10 text-center">
                 {
                     mode === 'sign-up' ? 'Create Account' : 'Log in'
