@@ -28,7 +28,7 @@ const CartItem = ({ game }) => {
             </div>
             <div className="opacity-50 group-hover:opacity-100 flex flex-col gap-1 sm:gap-2 w-full">
                 <div className="font-bold sm:text-xl">{game.game_name.length > 12 ? game.game_name.slice(0,11) : game.game_name}</div>
-                <div className="flex flex-col gap-2 md:flex justify-between">
+                <div className="flex flex-col gap-2 md:flex md:flex-row justify-between">
                     <div className="opacity-50 w-fit text-center text-sm leading-none flex items-center">{`Added at : ${formattedDate}`}</div>
                     <div className="flex gap-4">
                         <Link to={`/game/${game.game_id}`} className='cursor-pointer py-1 px-4 bg-blue-700 rounded w-fit'>Visit</Link>
