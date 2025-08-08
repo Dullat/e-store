@@ -43,7 +43,7 @@ const GameCard = ({ game }) => {
   };
 
   return (
-    <Link to={`game/${game.id}`} className='h-full'>
+    <Link to={`game/${game.id}`} className='h-full w-full'>
     <div
       className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer w-full h-full group"
       onMouseEnter={() => setIsHovered(true)}
@@ -51,7 +51,7 @@ const GameCard = ({ game }) => {
     >
 
       {/* BG and slideshow */}
-      <div className="relative aspect-[16/9] overflow-hidden">
+      <div className="relative aspect-[16/9] overflow-hidden w-full">
         <AddToCart gameId={game.id} gameName={game.name} gameBg={game.background_image} />
         <img
           src={getCurrentImage()}
