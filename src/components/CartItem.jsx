@@ -31,8 +31,8 @@ const CartItem = ({ game }) => {
                 <div className="flex justify-between">
                     <div className="opacity-50 w-fit text-center text-sm leading-none flex items-center">{`Added at : ${formattedDate}`}</div>
                     <div className="flex gap-4">
-                        <Link to={`/game/${game.game_id}`} className='py-1 px-4 bg-blue-700 rounded w-fit'>Visit Page</Link>
-                        <button ref={removeBtnRef} onClick={handleRemoveFromCart} className='py-1 px-4 bg-red-700 rounded w-fit'>{removeBtnText}</button>
+                        <Link to={`/game/${game.game_id}`} className='cursor-pointer py-1 px-4 bg-blue-700 rounded w-fit'>Visit Page</Link>
+                        <button ref={removeBtnRef} onClick={handleRemoveFromCart} className='cursor-pointer py-1 px-4 bg-red-700 rounded w-fit'>{removeBtnText}</button>
                     </div>
                 </div>
             </div>

@@ -83,10 +83,15 @@ const CartProvider = ({ children }) => {
       if (error) {
         console.log(error)
       }
+    } else {
+      console.log('setting false')
+      setCartStatus(false)
     }
   }
 
   useEffect(() => {
+    console.log("checking cart status............");
+
     checkCartStatus()
   }, [userProfile?.id])
 
