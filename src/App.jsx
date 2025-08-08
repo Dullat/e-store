@@ -13,6 +13,9 @@ import LoginForm from './components/LoginForm.jsx'
 import UserPage from './pages/UserPage.jsx'
 import GamePage from './pages/GamePage.jsx'
 import ToastProvider from './context/ToastProvider.jsx'
+import DiscoverPage from './pages/DiscoverPage.jsx'
+import NewsPage from './pages/NewsPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +25,9 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginForm />} />
       <Route path='/user' element={<UserPage />} />
       <Route path='/game/:id' element={<GamePage />} />
+      <Route path='/discover' element={<DiscoverPage />} />
+      <Route path='/news' element={<NewsPage />} />
+      <Route path='*' element={<NotFoundPage />} />
     </Route>
   )
 )
