@@ -50,11 +50,11 @@ const SearchSection = () => {
         }
     }, [searhTerm])
     return (
-        <div className='max-w-[1200px] m-auto flex items-center justify-between p-4  '>
-            <div className="flex items-center gap-2 bg-gray-900 rounded-4xl p-2 px-4 relative" ref={searchRef}>
+        <div className='max-w-[1200px] m-auto flex items-center justify-between p-4 gap-6 '>
+            <div className="flex items-center gap-2 bg-gray-900 rounded-4xl p-2 px-4 relative w-full max-w-[400px]" ref={searchRef}>
                 <FaSearch size={20} color='#fff' titel="search-icon" />
                 <input onFocus={handleFocus} type="text" value={searhTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder='Search'
-                    className='focus:outline-none' />
+                    className='focus:outline-none w-full' />
 
                 {
                     searchResults.length > 0 && isVisible && (

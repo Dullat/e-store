@@ -46,8 +46,10 @@ const GameCard = ({ game }) => {
     return (
         <>
             <div className="grid grid-cols-[1fr_4fr] gap-2 rounded overflow-hidden hover:bg-gray-800 p-2 cursor-pointer group">
-                <div className="flex w-full md:aspect-[4/2] [@media(min-width:880px)]:aspect-square rounded overflow-hidden m-auto">
-                    <img src={game.background_image} alt="bg image" className='w-full h-full object-cover' />
+                <div className="flex w-full md:aspect-[4/2] [@media(min-width:880px)]:aspect-square h-full bg-cover bg-center rounded overflow-hidden m-auto"
+                style={{backgroundImage: `url('${game.background_image}')`}}
+                >
+                    {/* <img src={game.background_image} alt="bg image" className='w-full h-full object-cover' /> */}
                 </div>
                 <div className="flex flex-col p-2 opacity-70 group-hover:opacity-100 transition">
                     <p className="text-sm" title={game.name}>{game.name.length > 12? `${game.name.slice(0,12)}...`: game.name}</p>

@@ -43,7 +43,7 @@ const GameCard = ({ game }) => {
   };
 
   return (
-    <Link to={`game/${game.id}`}>
+    <Link to={`game/${game.id}`} className='h-full'>
     <div
       className="relative group rounded-lg overflow-hidden bg-[#1a1a1a] shadow-lg transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer w-full h-full group"
       onMouseEnter={() => setIsHovered(true)}

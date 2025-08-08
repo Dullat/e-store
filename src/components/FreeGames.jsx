@@ -20,12 +20,12 @@ const FreeGames = () => {
     }, [])
 
     return (
-        <div className='w-full bg-gray-900 p-4 rounded-2xl'>
+        <div className='w-full bg-gray-900 p-4 mt-4'>
             <div className="text-2xl font-bold py-4 px-6">
                 Free Games
             </div>
             <div className="flex w-full">
-                <div className="flex items-center w-full">
+                <div className="flex flex-col md:flex-row items-center w-full">
                     {
                         games.map(game => (
                             <FreeGameCard key={game.id} game={game} />

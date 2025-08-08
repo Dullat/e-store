@@ -58,7 +58,7 @@ const CarouselSlide = ({ games, isError, isLoading, sectionTitle }) => {
   if (isLoading) return <CarouselSkeleton />
 
   return (
-    <div className="">
+    <div>
       <div className="flex items-center justify-between py-8 px-2">
         <h2 className='text-3xl font-bold'>{sectionTitle}</h2>
         <div className={`flex gap-2 items-center ${itemsPerScreen === 1 ? 'hidden' : ''}`}>
@@ -70,7 +70,7 @@ const CarouselSlide = ({ games, isError, isLoading, sectionTitle }) => {
           </button>
         </div>
       </div>
-      <div className="w-full min-h-40 h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide sm:overflow-hidden">
+      <div className="w-full min-h-30 h-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide sm:overflow-hidden">
         <div className="relative w-full h-full">
           <div
             className="flex h-full transition-transform duration-200 ease-out"
@@ -84,7 +84,7 @@ const CarouselSlide = ({ games, isError, isLoading, sectionTitle }) => {
                 <div
                   key={index}
                   className="p-4
-                  flex-shrink-0 h-full py-2 rounded-md flex items-center justify-center snap-start
+                  flex-shrink-0 py-2 rounded-md flex items-end snap-start
                   w-[calc(100%/4)] 
                   md:w-[calc((100%)/3)]
                   sm:w-[calc((100%)/2)]
