@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const FreeGameCard = ({ game }) => {
     const [isHovered, setIsHovered] = useState(false)
@@ -20,7 +21,8 @@ const FreeGameCard = ({ game }) => {
     }
 
     return (
-        <div
+        <Link
+            to={`game/${game.id}`}
             key={game.id}
             className="flex w-full p-4"
         >
@@ -35,7 +37,7 @@ const FreeGameCard = ({ game }) => {
                 />
                 <div className='absolute bottom-0 left-0 w-[100%] bg-[rgba(62,90,247,0.76)] text-center p-2'>{game.name}</div>
             </div>
-        </div>
+        </Link>
     )
 }
 
