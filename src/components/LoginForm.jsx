@@ -120,11 +120,44 @@ const LoginForm = () => {
                 )
             }
 
-            <p className="text-center text-green-600 text-sm mt-5">if dont want to create an account, use this dummy account.. <br />
-            Email : lzb4jjunj2@mrotzis.com <br />
-            pass: lzb4jjunj2@mrotzis.com</p>
+            <DummyAccount />
         </div >
     );
 }
 
 export default LoginForm
+
+const DummyAccount = () => {
+  const email = 'lzb4jjunj2@mrotzis.com';
+  const password = 'lzb4jjunj2@mrotzis.com';
+  const [copied, setCopied] = useState(null);
+
+  const handleCopy = async (text, type) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(type);
+      setTimeout(() => setCopied(null), 1500);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+
+  return (
+    <div className="text-center text-green-600 text-sm mt-5">
+      <p>if don't want to create an account, use this dummy account..</p>
+      <div className="mt-2 flex items-center justify-center gap-2">
+        <span>Email: {email}</span>
+        <button
+          className="text-blue-600 hover:underline text-xs cursor-pointer"
+          onClick={() => handleCopy(email, 'email')}
+        >
+          📋 {copied === 'email' ? 'Copied!' : 'Copy'}
+        </button>
+      </div>
+      <div className="mt-1 flex items-center justify-center gap-2">
+        <span>Pass: {password}</span>
+      </div>
+    </div>
+  );
+};
+
