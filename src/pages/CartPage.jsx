@@ -3,6 +3,7 @@ import { CartContext } from '../context/CartProvider'
 import CartItem from '../components/CartItem'
 import { AuthContext } from '../context/AuthProvider'
 import { supabase } from '../lib/supabaseClient'
+import ScrollToTop from '../components/ScrollToTop'
 
 const CartPage = () => {
     const { userProfile } = useContext(AuthContext)
@@ -22,6 +23,7 @@ const CartPage = () => {
 
     return (
         <div className='w-full p-4 max-w-[900px] m-auto min-h-screen'>
+            <ScrollToTop />
             <p className='text-2xl font-bold my-4'>Your Cart</p>
             <div className="flex flex-col gap-4 w-full">
                 {

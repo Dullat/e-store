@@ -3,6 +3,7 @@ import GameHero from '../components/GameHero'
 import { Link, useParams } from 'react-router-dom'
 import AddToCart from '../components/AddToCart'
 import GamePageSkeleton from '../components/GamePageLoadingSkel'
+import ScrollToTop from '../components/ScrollToTop'
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY
 
 const GamePage = () => {
@@ -78,6 +79,7 @@ const GamePage = () => {
     if (loading) return <GamePageSkeleton />
     return (
         <div className='max-w-[1200px] m-auto p-4 flex flex-col'>
+            <ScrollToTop />
             <h1 className='text-xl md:text-2xl lg:text-3xl font-bold text-white my-4'>{game.name}</h1>
             <div className="grid lg:grid-cols-[5fr_2fr] gap-4">
                 <GameHero game={game} screenshots={screenshots} trailers={trailers} />
