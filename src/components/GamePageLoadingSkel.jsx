@@ -1,5 +1,8 @@
+import ScrollToTop from "./ScrollToTop";
+
 const GamePageSkeleton = () => (
   <div className="max-w-[1200px] m-auto p-4">
+    <ScrollToTop />
     <div className="grid lg:grid-cols-[5fr_2fr] gap-4">
       
       <div className="relative w-full min-h-[340px] bg-gray-800 rounded-2xl overflow-hidden">
