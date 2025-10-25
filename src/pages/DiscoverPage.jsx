@@ -107,7 +107,7 @@ const DiscoverPage = () => {
     <div
       className={`flex flex-col gap-1 max-w-[1200px] m-auto sm:flex-row relative`}
     >
-      <div className="xl:w-[200px] md:w-[200px] sm:w-[170px] flex-shrink-0 flex flex-col gap-1 p-1 mx-3 sm:mx-0 sticky top-0 z-999 backdrop-blur bg-[rgba(0,0,0,.3)]">
+      <div className="xl:w-[200px] md:w-[200px] sm:w-[170px] flex-shrink-0 flex flex-col gap-1 p-1 mx-3 sm:mx-0 sticky top-0 z-11 backdrop-blur bg-[rgba(0,0,0,.3)]">
         <button
           className={`w-full py-2 bg-blue-600 rounded cursor-pointer`}
           onClick={() => {
@@ -120,9 +120,9 @@ const DiscoverPage = () => {
         >
           {!searchLoading ? "Apply Changes" : "Loading..."}
         </button>
-        <div className="px-2 py-1 text-blue-600 bg-gray-800 cursor-pointer">
-          According to you
-        </div>
+        {/* <div className="px-2 py-1 text-blue-600 bg-gray-800 cursor-pointer"> */}
+        {/*   According to you */}
+        {/* </div> */}
         <div onClick={() => setOpenPlatformsSeciton(!openPlatformsSection)}>
           <p className="px-2 py-1 text-blue-600 bg-gray-800 cursor-pointer">
             Platforms
@@ -172,7 +172,7 @@ const DiscoverPage = () => {
           {showToast && (
             <div className={`h-[20px] w-[100%] mx-4 relative flex`}>
               <p
-                className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-999`}
+                className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-11`}
               >
                 Refreshed
               </p>
