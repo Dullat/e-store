@@ -3,6 +3,13 @@ import getGames from "../data/getGames";
 import getGenres from "../data/getGenres";
 import getPlatforms from "../data/getPlatforms";
 import GameCard from "../components/GameCard";
+import {
+  isMobile,
+  isTablet,
+  isDesktop,
+  BrowserView,
+  MobileView,
+} from "react-device-detect";
 
 const DiscoverPage = () => {
   const [games, setGames] = useState([]);
@@ -10,6 +17,8 @@ const DiscoverPage = () => {
   const [platforms, setPlatforms] = useState([]);
   const [openPlatformsSection, setOpenPlatformsSeciton] = useState(false);
   const [openGenresSection, setOpenGenresSection] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const [searchGenresTerm, setSearchGenresTerm] = useState([]);
   const [searchPlatformsTerm, setSearchPlatformsTerm] = useState([]);
@@ -27,11 +36,21 @@ const DiscoverPage = () => {
     }
 
     try {
+      setSearchLoading(true);
       const res = await getGames(searchTerm);
       setGames(res.results);
+      setSearchLoading(false);
+      triggerToast();
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const triggerToast = () => {
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -91,9 +110,15 @@ const DiscoverPage = () => {
       <div className="xl:w-[200px] md:w-[200px] sm:w-[170px] flex-shrink-0 flex flex-col gap-1 p-1 mx-3 sm:mx-0 sticky top-0 z-999 backdrop-blur bg-[rgba(0,0,0,.3)]">
         <button
           className={`w-full py-2 bg-blue-600 rounded cursor-pointer`}
-          onClick={fetchGames}
+          onClick={() => {
+            if (isMobile) {
+              setOpenPlatformsSeciton(false);
+              setOpenGenresSection(false);
+            }
+            return fetchGames();
+          }}
         >
-          Apply Changes
+          {!searchLoading ? "Apply Changes" : "Loading..."}
         </button>
         <div className="px-2 py-1 text-blue-600 bg-gray-800 cursor-pointer">
           According to you
@@ -143,7 +168,30 @@ const DiscoverPage = () => {
         </div>
       </div>
       <div>
-        <div className={`flex flex-wrap`}>
+        <div className={`flex flex-wrap relative`}>
+          {showToast && (
+            <div className={`h-[20px] w-[100%] mx-4 relative flex`}>
+              <p
+                className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-999`}
+              >
+                Refreshed
+              </p>
+              <div
+                className={`bg-blue-600 absolute top-[50%] -translate-y-1/2 left-0 h-[2px]`}
+                style={{
+                  width: "100%",
+                  transformOrigin: "left",
+                  animation: "shrink 2s linear forwards",
+                }}
+              ></div>
+              <style>{`
+      @keyframes shrink {
+        from { transform: scaleX(1); }
+        to { transform: scaleX(0); }
+      }
+    `}</style>
+            </div>
+          )}{" "}
           {games && games.length > 0 ? (
             games.map((game) => (
               <div
@@ -180,4 +228,3 @@ const CustomLi = ({ item, genre, handleClick, list }) => (
 );
 
 export default DiscoverPage;
-
