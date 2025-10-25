@@ -12,7 +12,7 @@ const getGames = async (prefs) => {
   try {
     // console.log(prefs, "loggin ggg")
     const url = `https://api.rawg.io/api/games?key=${API_KEY}${prefs}`;
-    console.log(`this is url : ${url}`);
+    // console.log(`this is url : ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Could Not Fetch data From API : ${response.status}`);
@@ -26,4 +26,3 @@ const getGames = async (prefs) => {
 };
 
 export default getGames;
-

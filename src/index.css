@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-custom: 900px;
+  --aspect-ratio-banner: 8 / 1;
+}
+
 .scrollbar-hide {
   scrollbar-width: none;
   /* Firefox */
@@ -90,4 +95,24 @@
 
 .animate-fade-in {
   animation: fade-in 0.35s cubic-bezier(.77, .08, .76, 1.03);
+}
+
+
+/* Custom scrollbar styles */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #d1d5db; /* gray-300 */
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #374151; /* gray-700 */
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #1f2937; /* gray-800 */
 }

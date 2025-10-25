@@ -39,7 +39,6 @@ const DiscoverPage = () => {
       try {
         const data = await getGenres();
         setGenres(data.results);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -61,9 +60,13 @@ const DiscoverPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(searchGenresTerm, searchPlatformsTerm);
     fetchGames();
-  }, [searchPlatformsTerm, searchGenresTerm]);
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(searchGenresTerm, searchPlatformsTerm);
+  //   fetchGames();
+  // }, [searchPlatformsTerm, searchGenresTerm]);
 
   const handlePlatformClick = ({ id, slug }) => {
     if (searchPlatformsTerm.some((item) => item.id === id)) {
@@ -100,7 +103,7 @@ const DiscoverPage = () => {
             Platforms
           </p>
           <ul
-            className={`flex flex-col gap-1 px-2 py-1 ${openPlatformsSection ? "h-[200px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300" : "h-0 overflow-hidden"}`}
+            className={`flex flex-col gap-1 px-2 py-1 ${openPlatformsSection ? "h-[200px] overflow-y-auto scrollbar scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300" : "h-0 hidden"}`}
           >
             {platforms.length > 0 ? (
               platforms.map((platform) => (
@@ -122,7 +125,7 @@ const DiscoverPage = () => {
             Genres
           </p>
           <ul
-            className={`flex flex-col gap-1 px-2 py-1 ${openGenresSection ? "h-[200px] overflow-y-scroll" : "h-0 hidden"}`}
+            className={`flex flex-col gap-1 px-2 py-1 ${openGenresSection ? "h-[200px] overflow-y-auto" : "h-0 hidden"}`}
           >
             {genres.length > 0 ? (
               genres.map((genre) => (
