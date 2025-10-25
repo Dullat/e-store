@@ -37,9 +37,8 @@ const AvatarUpload = ({ userId, onClose }) => {
         {error && <div className="mt-2 text-red-400">{error}</div>}
         <button
           onClick={onClose}
-          className="mt-4 text-blue-400 hover:underline"
+          className="mt-4 text-blue-400 hover:underline cursor-pointer text-red-600"
           disabled={isLoading}
-          className={`cursor-pointer text-red-600`}
         >
           Cancel
         </button>
