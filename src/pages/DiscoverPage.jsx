@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import getGames from "../data/getGames";
 import getGenres from "../data/getGenres";
 import getPlatforms from "../data/getPlatforms";
@@ -24,10 +24,14 @@ const DiscoverPage = () => {
   const [searchGenresTerm, setSearchGenresTerm] = useState([]);
   const [searchPlatformsTerm, setSearchPlatformsTerm] = useState([]);
 
-  const fetchGames = async () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const bottomRef = useRef(null);
+
+  const fetchGames = async (page = 1) => {
     const platformsSlug = searchPlatformsTerm.map((item) => item.id).join(",");
     const genresSlug = searchGenresTerm.map((item) => item.id).join(",");
-    let searchTerm = `&page_size=20`;
+    let searchTerm = `&page_size=20&page=${page}`;
 
     if (platformsSlug) {
       searchTerm += `&platforms=${platformsSlug}`;
@@ -37,15 +41,13 @@ const DiscoverPage = () => {
     }
 
     try {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      console.log("getting games");
       setSearchLoading(true);
       const res = await getGames(searchTerm);
-      setGames(res.results);
+      setGames(page > 1 ? [...games, ...res.results] : res.results);
       setSearchLoading(false);
       triggerToast();
+      if (res.results.length < 20) setHasMore(false);
     } catch (error) {
       console.log(error);
     }
@@ -84,13 +86,25 @@ const DiscoverPage = () => {
   }, []);
 
   useEffect(() => {
-    fetchGames();
-  }, []);
+    fetchGames(currentPage);
+  }, [currentPage]);
 
-  // useEffect(() => {
-  //   console.log(searchGenresTerm, searchPlatformsTerm);
-  //   fetchGames();
-  // }, [searchPlatformsTerm, searchGenresTerm]);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !searchLoading) {
+          const timeout = setTimeout(() => {
+            setCurrentPage((prev) => prev + 1);
+          }, 2000);
+        }
+      },
+      { root: null, rootMargin: "0px", threshold: 0.1 },
+    );
+
+    if (bottomRef.current) observer.observe(bottomRef.current);
+
+    return () => observer.disconnect();
+  }, [hasMore, searchLoading]);
 
   const handlePlatformClick = ({ id, slug }) => {
     if (searchPlatformsTerm.some((item) => item.id === id)) {
@@ -112,7 +126,7 @@ const DiscoverPage = () => {
     <div
       className={`flex flex-col gap-1 max-w-[1200px] m-auto sm:flex-row relative`}
     >
-      <div className="xl:w-[200px] md:w-[200px] sm:w-[170px] flex-shrink-0 flex flex-col gap-1 p-1 mx-3 sm:mx-0 sticky top-0 z-11 backdrop-blur bg-[rgba(0,0,0,.3)]">
+      <div className="xl:w-[200px] md:w-[200px] sm:w-[170px] flex-shrink-0 h-fit flex flex-col gap-1 p-1 mx-3 sm:mx-0 sticky top-0 z-11 backdrop-blur bg-[rgba(0,0,0,.3)]">
         <button
           className={`w-full py-2 bg-blue-600 rounded cursor-pointer`}
           onClick={() => {
@@ -120,6 +134,11 @@ const DiscoverPage = () => {
               setOpenPlatformsSeciton(false);
               setOpenGenresSection(false);
             }
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+
             return fetchGames();
           }}
         >
@@ -172,46 +191,34 @@ const DiscoverPage = () => {
           </ul>
         </div>
       </div>
-      <div>
-        {showToast && (
-          <div className={`h-[20px] w-[100%] mx-4 relative flex`}>
-            <p
-              className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-11`}
-            >
-              Refreshed
-            </p>
-            <div
-              className={`bg-blue-600 absolute top-[50%] -translate-y-1/2 left-0 h-[2px]`}
-              style={{
-                width: "100%",
-                transformOrigin: "left",
-                animation: "shrink 2s linear forwards",
-              }}
-            ></div>
-            <style>{`
+      <div className="min-h-700px">
+        <div className={`flex flex-wrap relative w-full`}>
+          {showToast && (
+            <div className={`h-[20px] w-[100%] mx-4 relative flex`}>
+              <p
+                className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-1`}
+              >
+                Refreshed
+              </p>
+              <div
+                className={`bg-blue-600 absolute top-[50%] -translate-y-1/2 left-0 h-[2px]`}
+                style={{
+                  width: "100%",
+                  transformOrigin: "left",
+                  animation: "shrink 2s linear forwards",
+                }}
+              ></div>
+              <style>{`
                   @keyframes shrink {
                   from { transform: scaleX(1); }
                   to { transform: scaleX(0); }
                   }
             `}</style>
-          </div>
-        )}
-        <div className={`flex flex-wrap relative w-full`}>
-          {games && !searchLoading && games.length > 0
-            ? games.map((game) => (
-                <div
-                  key={game.id}
-                  className={`flex flex-shrink-0 p-2 m-auto
-                  w-[calc(100%/4)] 
-                  md:w-[calc((100%)/3)]
-                  sm:w-[calc((100%)/2)]
-                  min-[100px]:w-[88.6667%]
-                `}
-                >
-                  <GameCard game={game} key={game.id} />
-                </div>
-              ))
-            : Array.from({ length: 9 }).map((_, i) => (
+            </div>
+          )}
+          {games && games.length && !searchLoading > 0
+            ? games.map((game) => <GameCardWrapper key={game.id} game={game} />)
+            : Array.from({ length: 12 }).map((_, i) => (
                 <div
                   key={i}
                   className={`flex flex-shrink-0 p-2 m-auto
@@ -225,10 +232,45 @@ const DiscoverPage = () => {
                 </div>
               ))}
         </div>
+        {hasMore && !searchLoading && (
+          <p ref={bottomRef} className="text-center">
+            LoadMore?
+          </p>
+        )}
+        {hasMore && searchLoading && (
+          <div className={`flex flex-wrap relative w-full`}>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className={`flex flex-shrink-0 p-2 m-auto
+                  w-[calc(100%/4)] 
+                  md:w-[calc((100%)/3)]
+                  sm:w-[calc((100%)/2)]
+                  min-[100px]:w-[88.6667%]
+                `}
+              >
+                <GameCardSkeleton />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
+const GameCardWrapper = React.memo(({ game }) => (
+  <div
+    className={`flex flex-shrink-0 p-2 m-auto
+      w-[calc(100%/4)] 
+      md:w-[calc((100%)/3)]
+      sm:w-[calc((100%)/2)]
+      min-[100px]:w-[88.6667%]
+    `}
+  >
+    <GameCard game={game} />
+  </div>
+));
 
 const CustomLi = ({ item, genre, handleClick, list }) => (
   <li
