@@ -3,6 +3,7 @@ import getGames from "../data/getGames";
 import getGenres from "../data/getGenres";
 import getPlatforms from "../data/getPlatforms";
 import GameCard from "../components/GameCard";
+import GameCardSkeleton from "../utils/GameCardSkeleton";
 import {
   isMobile,
   isTablet,
@@ -36,6 +37,10 @@ const DiscoverPage = () => {
     }
 
     try {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       setSearchLoading(true);
       const res = await getGames(searchTerm);
       setGames(res.results);
@@ -168,47 +173,57 @@ const DiscoverPage = () => {
         </div>
       </div>
       <div>
-        <div className={`flex flex-wrap relative`}>
-          {showToast && (
-            <div className={`h-[20px] w-[100%] mx-4 relative flex`}>
-              <p
-                className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-11`}
-              >
-                Refreshed
-              </p>
-              <div
-                className={`bg-blue-600 absolute top-[50%] -translate-y-1/2 left-0 h-[2px]`}
-                style={{
-                  width: "100%",
-                  transformOrigin: "left",
-                  animation: "shrink 2s linear forwards",
-                }}
-              ></div>
-              <style>{`
-      @keyframes shrink {
-        from { transform: scaleX(1); }
-        to { transform: scaleX(0); }
-      }
-    `}</style>
-            </div>
-          )}{" "}
-          {games && games.length > 0 ? (
-            games.map((game) => (
-              <div
-                key={game.id}
-                className={`flex flex-shrink-0 p-2 m-auto
+        {showToast && (
+          <div className={`h-[20px] w-[100%] mx-4 relative flex`}>
+            <p
+              className={`bg-[rgba(0,0,0,.1)] backdrop-blur rounded text-sm w-fit m-auto z-11`}
+            >
+              Refreshed
+            </p>
+            <div
+              className={`bg-blue-600 absolute top-[50%] -translate-y-1/2 left-0 h-[2px]`}
+              style={{
+                width: "100%",
+                transformOrigin: "left",
+                animation: "shrink 2s linear forwards",
+              }}
+            ></div>
+            <style>{`
+                  @keyframes shrink {
+                  from { transform: scaleX(1); }
+                  to { transform: scaleX(0); }
+                  }
+            `}</style>
+          </div>
+        )}
+        <div className={`flex flex-wrap relative w-full`}>
+          {games && !searchLoading && games.length > 0
+            ? games.map((game) => (
+                <div
+                  key={game.id}
+                  className={`flex flex-shrink-0 p-2 m-auto
                   w-[calc(100%/4)] 
                   md:w-[calc((100%)/3)]
                   sm:w-[calc((100%)/2)]
                   min-[100px]:w-[88.6667%]
                 `}
-              >
-                <GameCard game={game} key={game.id} />
-              </div>
-            ))
-          ) : (
-            <p>Loading..</p>
-          )}
+                >
+                  <GameCard game={game} key={game.id} />
+                </div>
+              ))
+            : Array.from({ length: 9 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`flex flex-shrink-0 p-2 m-auto
+                  w-[calc(100%/4)] 
+                  md:w-[calc((100%)/3)]
+                  sm:w-[calc((100%)/2)]
+                  min-[100px]:w-[88.6667%]
+                `}
+                >
+                  <GameCardSkeleton />
+                </div>
+              ))}
         </div>
       </div>
     </div>
@@ -217,7 +232,7 @@ const DiscoverPage = () => {
 
 const CustomLi = ({ item, genre, handleClick, list }) => (
   <li
-    className={`px-2 py-1 rounded hover:bg-gray-600 cursor-pointer ${list.some((i) => i.id === item.id) ? "bg-gray-600" : ""}`}
+    className={`px-2 py-1 rounded  cursor-pointer ${list.some((i) => i.id === item.id) ? "bg-blue-600 hover:bg-blue-600" : "hover:bg-gray-800"}`}
     onClick={(e) => {
       e.stopPropagation();
       handleClick({ id: item.id, slug: item.slug });
