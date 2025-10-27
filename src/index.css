@@ -117,3 +117,31 @@
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: #1f2937; /* gray-800 */
 }
+
+
+
+.prose {
+  color: #e5e5e5; /* Light gray text for dark backgrounds */
+}
+
+.prose a {
+  color: #93c5fd; /* Soft blue for links */
+}
+
+.prose strong {
+  color: #fff; /* White for emphasis */
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: #f9fafb; /* Slightly brighter for headings */
+}
+
+.prose code {
+  color: #facc15; /* Yellow for inline code */
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
