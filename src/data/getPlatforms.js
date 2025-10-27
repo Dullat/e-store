@@ -8,21 +8,18 @@ const API_OPTIONS = {
   },
 };
 
-const getGames = async (prefs) => {
+const getPlatforms = async (prefs) => {
   try {
-    // console.log(prefs, "loggin ggg")
-    const url = `https://api.rawg.io/api/games?key=${API_KEY}${prefs}`;
-    // console.log(`this is url : ${url}`);
+    const url = `https://api.rawg.io/api/platforms?key=${API_KEY}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Could Not Fetch data From API : ${response.status}`);
     }
     const data = await response.json();
-    // console.log(data.results[0])
     return data;
   } catch (error) {
     throw error;
   }
 };
 
-export default getGames;
+export default getPlatforms;

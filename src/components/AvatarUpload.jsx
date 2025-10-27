@@ -1,39 +1,25 @@
-import { useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { useUpdateAvatarMutation } from "../features/profile/profileApi";
 
-const AvatarUpload = ({ userId, onUpload, onClose }) => {
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
+const AvatarUpload = ({ userId, onClose }) => {
+  const [updateAvatar, { isLoading, isError, error }] =
+    useUpdateAvatarMutation();
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setUploading(true);
-    setError(null);
-
-    const fileExt = file.name.split('.').pop();
+    const fileExt = file.name.split(".").pop();
     const filePath = `${userId}.${fileExt}`;
 
-    const { error: uploadError } = await supabase
-      .storage
-      .from("avatars")
-      .upload(filePath, file, { upsert: true });
+    const { error: uploadError } = updateAvatar({
+      userId,
+      file,
+      filePath,
+    });
 
-    if (uploadError) {
-      setError(uploadError.message);
-      setUploading(false);
-      return;
-    }
-
-    // Get the public URL
-    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-    if (onUpload) {
-      await onUpload(data.publicUrl); // Call the handler to update DB and refetch profile
-    }
-
-    setUploading(false);
-    if (onClose) onClose();
+    onClose();
   };
 
   return (
@@ -43,17 +29,19 @@ const AvatarUpload = ({ userId, onUpload, onClose }) => {
         <input
           type="file"
           accept="image/*"
-          disabled={uploading}
+          disabled={isLoading}
           onChange={handleFileChange}
-          className="text-white"
+          className="text-blue-600 cursor-pointer"
         />
-        {uploading && <div className="mt-2 text-blue-300">Uploading...</div>}
+        {isLoading && <div className="mt-2 text-blue-300">Uploading...</div>}
         {error && <div className="mt-2 text-red-400">{error}</div>}
         <button
           onClick={onClose}
-          className="mt-4 text-blue-400 hover:underline"
-          disabled={uploading}
-        >Cancel</button>
+          className="mt-4 text-blue-400 hover:underline cursor-pointer text-red-600"
+          disabled={isLoading}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );
