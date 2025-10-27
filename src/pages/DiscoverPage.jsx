@@ -26,7 +26,9 @@ const DiscoverPage = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+
   const bottomRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const fetchGames = async (page = 1) => {
     const platformsSlug = searchPlatformsTerm.map((item) => item.id).join(",");
@@ -41,6 +43,7 @@ const DiscoverPage = () => {
     }
 
     try {
+      setShowToast(false);
       console.log("getting games");
       setSearchLoading(true);
       const res = await getGames(searchTerm);
@@ -55,10 +58,16 @@ const DiscoverPage = () => {
 
   const triggerToast = () => {
     setShowToast(true);
-    setTimeout(() => {
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
       setShowToast(false);
     }, 2000);
   };
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -95,7 +104,7 @@ const DiscoverPage = () => {
         if (entries[0].isIntersecting && hasMore && !searchLoading) {
           const timeout = setTimeout(() => {
             setCurrentPage((prev) => prev + 1);
-          }, 2000);
+          }, 0);
         }
       },
       { root: null, rootMargin: "0px", threshold: 0.1 },
@@ -122,25 +131,28 @@ const DiscoverPage = () => {
     }
   };
 
+  const handleApply = () => {
+    if (isMobile) {
+      setOpenPlatformsSeciton(false);
+      setOpenGenresSection(false);
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    return fetchGames();
+  };
+
   return (
     <div
       className={`flex flex-col gap-1 max-w-[1200px] m-auto sm:flex-row relative`}
     >
       <div className="xl:w-[200px] md:w-[200px] sm:w-[170px] flex-shrink-0 h-fit flex flex-col gap-1 p-1 mx-3 sm:mx-0 sticky top-0 z-11 backdrop-blur bg-[rgba(0,0,0,.3)]">
         <button
-          className={`w-full py-2 bg-blue-600 rounded cursor-pointer`}
-          onClick={() => {
-            if (isMobile) {
-              setOpenPlatformsSeciton(false);
-              setOpenGenresSection(false);
-            }
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-
-            return fetchGames();
-          }}
+          className={`w-full py-2 bg-blue-600 rounded cursor-pointer ${searchLoading ? "disabled:cursor-not-allowed disabled:bg-gray-600" : ""}`}
+          onClick={handleApply}
+          disabled={searchLoading}
         >
           {!searchLoading ? "Apply Changes" : "Loading..."}
         </button>
@@ -216,7 +228,7 @@ const DiscoverPage = () => {
             `}</style>
             </div>
           )}
-          {games && games.length && !searchLoading > 0
+          {games && games.length > 0
             ? games.map((game) => <GameCardWrapper key={game.id} game={game} />)
             : Array.from({ length: 12 }).map((_, i) => (
                 <div
@@ -234,26 +246,26 @@ const DiscoverPage = () => {
         </div>
         {hasMore && !searchLoading && (
           <p ref={bottomRef} className="text-center">
-            LoadMore?
+            Loading More...
           </p>
         )}
-        {hasMore && searchLoading && (
-          <div className={`flex flex-wrap relative w-full`}>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={i}
-                className={`flex flex-shrink-0 p-2 m-auto
-                  w-[calc(100%/4)] 
-                  md:w-[calc((100%)/3)]
-                  sm:w-[calc((100%)/2)]
-                  min-[100px]:w-[88.6667%]
-                `}
-              >
-                <GameCardSkeleton />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* {hasMore && searchLoading && ( */}
+        {/*   <div className={`flex flex-wrap relative w-full`}> */}
+        {/*     {Array.from({ length: 3 }).map((_, i) => ( */}
+        {/*       <div */}
+        {/*         key={i} */}
+        {/*         className={`flex flex-shrink-0 p-2 m-auto */}
+        {/*           w-[calc(100%/4)]  */}
+        {/*           md:w-[calc((100%)/3)] */}
+        {/*           sm:w-[calc((100%)/2)] */}
+        {/*           min-[100px]:w-[88.6667%] */}
+        {/*         `} */}
+        {/*       > */}
+        {/*         <GameCardSkeleton /> */}
+        {/*       </div> */}
+        {/*     ))} */}
+        {/*   </div> */}
+        {/* )} */}
       </div>
     </div>
   );
