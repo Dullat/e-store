@@ -145,3 +145,10 @@
   padding: 0.2em 0.4em;
   border-radius: 4px;
 }
+
+.prose blockquote {
+  color: #e5e5e5;
+  font-style: italic;
+  border-left: 4px solid #93c5fd;
+  padding-left: 1em;
+}
