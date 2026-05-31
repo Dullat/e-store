@@ -66,6 +66,18 @@ export const userApi = ApiBase.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    logout: builder.query({
+      query: () => "/user/logout",
+      async onQueryStarted(result, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(setProfile({ profile: null }));
+        } catch (err) {
+          console.error("Failed to log-out");
+        }
+      },
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -74,6 +86,7 @@ export const {
   useGetProfileQuery,
   useUpdateAvatarMutation,
   useUpdateUserNameMutation,
+  useLogoutQuery,
 } = userApi;
 
 export const profileApi = createApi({

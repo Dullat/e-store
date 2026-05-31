@@ -23,6 +23,7 @@ import ToastProvider from "./context/ToastProvider.jsx";
 import DiscoverPage from "./pages/DiscoverPage.jsx";
 import NewsPage from "./pages/NewsPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
+import LogoutPage from "./pages/LogoutPage.jsx";
 
 import store from "./app/store";
 
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
       <Route path="/game/:id" element={<GamePage />} />
       <Route path="/discover" element={<DiscoverPage />} />
       <Route path="/news" element={<NewsPage />} />
+      <Route path="/logout" element={<LogoutPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>,
   ),

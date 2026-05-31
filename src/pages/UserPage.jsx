@@ -33,8 +33,6 @@ const UserPage = () => {
     setUpdatingAvatar(true);
   };
 
-  const [signOut] = useSignOutMutation();
-
   const onClose = () => {
     setUpdatingAvatar(false);
     setUpdateMode(false);
@@ -129,12 +127,12 @@ const UserPage = () => {
               ? `Changed your mind? go back to normal mode`
               : `Wanna Change ur profile ?`}
           </button>
-          <button
-            onClick={signOut}
+          <Link
+            to="/logout"
             className="text-red-600 opacity-70 text-xs md:text-sm text-center cursor-pointer m-auto w-fit"
           >
             or want to log-out ?
-          </button>
+          </Link>
         </div>
       </div>
 
