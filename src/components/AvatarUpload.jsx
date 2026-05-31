@@ -13,11 +13,7 @@ const AvatarUpload = ({ userId, onClose }) => {
     const fileExt = file.name.split(".").pop();
     const filePath = `${userId}.${fileExt}`;
 
-    const { error: uploadError } = updateAvatar({
-      userId,
-      file,
-      filePath,
-    });
+    const { error: uploadError } = updateAvatar(file);
 
     onClose();
   };

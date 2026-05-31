@@ -1,7 +1,11 @@
 import { useContext, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 
-import { useSignInMutation, useSignUpMutation } from "./profileApi";
+import {
+  useSignInMutation,
+  useSignUpMutation,
+  useLoginMutation,
+} from "./profileApi";
 import { selectProfile } from "./profileSlice.js";
 import { useSelector } from "react-redux";
 
@@ -17,9 +21,9 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const [
-    signIn,
+    login,
     { isLoading: isSignInLoading, isError: isSignInError, error: signInError },
-  ] = useSignInMutation();
+  ] = useLoginMutation();
   const [
     signUp,
     { isLoading: isSignUpLoading, isError: isSignUpError, error: signUpError },
@@ -55,7 +59,7 @@ const LoginForm = () => {
     }
 
     if (mode === "sign-in") {
-      const { data, error } = await signIn({ email, password: pass });
+      const { data, error } = await login({ email, password: pass });
       if (!error) {
         navigate("/");
       }

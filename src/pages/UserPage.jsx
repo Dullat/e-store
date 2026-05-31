@@ -12,16 +12,17 @@ import {
 import useAuthUserId from "../hooks/useAuthUserId";
 
 const UserPage = () => {
-  const userId = useAuthUserId();
   const {
-    data: profile,
+    data,
     isLoading: isProfileLoading,
     isError: isProfileError,
     error: profileError,
-  } = useGetProfileQuery(userId, {
-    skip: !userId,
-    refetchOnMountOrArgChange: true,
-  });
+  } = useGetProfileQuery();
+
+  const profile = data?.user;
+
+  console.log(profile);
+
   const [userName, setUserName] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
   const [updatingAvatar, setUpdatingAvatar] = useState(false);
@@ -50,9 +51,7 @@ const UserPage = () => {
     }
   };
 
-  console.log(profile, userId);
-
-  if (!profile || !userId)
+  if (!profile)
     return (
       <div className="grid place-content-center w-full">
         <div className="mt-20 flex flex-col gap-6">
@@ -73,7 +72,7 @@ const UserPage = () => {
           {/* <p>Details</p> */}
           <div className="flex h-40 aspect-square bg-gray-600 rounded-full overflow-hidden">
             <img
-              src={profile?.avatar}
+              src={profile?.avatar_url}
               alt="Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar Avatar"
               className="h-full w-full object-cover"
               onClick={updateAvatar}

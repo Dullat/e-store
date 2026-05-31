@@ -3,7 +3,66 @@
 
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { supabase } from "../../lib/supabaseClient";
-import { setProfile, setProfileError } from "./profileSlice";
+import { ApiBase } from "../../services/api.js";
+import { setProfile, unsetProfile, setProfileError } from "./profileSlice.js";
+
+// ############## injecting endPoints ##############
+
+export const userApi = ApiBase.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (data) => ({
+        url: "auth/login",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const data = await queryFulfilled;
+          dispatch(
+            setProfile({
+              profile: data.user,
+            }),
+          );
+        } catch (err) {
+          console.log("Error setting profile");
+        }
+      },
+      providesTags: ["User"],
+    }),
+    getProfile: builder.query({
+      query: () => "auth/get-user",
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const data = await queryFulfilled;
+          dispatch(
+            setProfile({
+              profile: data.user,
+            }),
+          );
+        } catch (err) {
+          console.log("Error setting profile");
+        }
+      },
+      providesTags: ["User"],
+    }),
+    updateAvatar: builder.mutation({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append("image", file);
+        return {
+          url: "/user/update-avatar",
+          method: "PATCH",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
+  }),
+});
+
+export const { useLoginMutation, useGetProfileQuery, useUpdateAvatarMutation } =
+  userApi;
 
 export const profileApi = createApi({
   reducerPath: "profileApi",
@@ -156,11 +215,9 @@ export const profileApi = createApi({
 });
 
 export const {
-  useGetProfileQuery,
   useLazyGetProfileQuery,
   useSignInMutation,
   useSignUpMutation,
   useSignOutMutation,
-  useUpdateAvatarMutation,
   useUpdateUserNameMutation,
 } = profileApi;
