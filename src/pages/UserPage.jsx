@@ -43,7 +43,7 @@ const UserPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await updateUserName({ userName }).unwrap();
+      const result = await updateUserName(userName);
       setUpdateMode(false);
     } catch (error) {
       setUpdateMode(false);

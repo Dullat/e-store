@@ -58,11 +58,23 @@ export const userApi = ApiBase.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
+    updateUserName: builder.mutation({
+      query: (user_name) => ({
+        url: "/user/update-username",
+        method: "PATCH",
+        body: { user_name },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useLoginMutation, useGetProfileQuery, useUpdateAvatarMutation } =
-  userApi;
+export const {
+  useLoginMutation,
+  useGetProfileQuery,
+  useUpdateAvatarMutation,
+  useUpdateUserNameMutation,
+} = userApi;
 
 export const profileApi = createApi({
   reducerPath: "profileApi",
@@ -219,5 +231,4 @@ export const {
   useSignInMutation,
   useSignUpMutation,
   useSignOutMutation,
-  useUpdateUserNameMutation,
 } = profileApi;
