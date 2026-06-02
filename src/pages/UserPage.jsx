@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import {
   useUpdateUserNameMutation,
   useGetProfileQuery,
-  useSignOutMutation,
 } from "../features/profile/profileApi";
 import useAuthUserId from "../hooks/useAuthUserId";
 

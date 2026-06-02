@@ -1,17 +1,14 @@
 import { useContext, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 
-import {
-  useSignInMutation,
-  useSignUpMutation,
-  useLoginMutation,
-} from "./profileApi";
+import { useSigninMutation, useLoginMutation } from "./profileApi";
 import { selectProfile } from "./profileSlice.js";
 import { useSelector } from "react-redux";
 
 const LoginForm = () => {
   const user = null;
   const profile = useSelector(selectProfile);
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [mode, setMode] = useState("sign-in");
@@ -27,34 +24,22 @@ const LoginForm = () => {
   const [
     signUp,
     { isLoading: isSignUpLoading, isError: isSignUpError, error: signUpError },
-  ] = useSignUpMutation();
+  ] = useSigninMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (mode === "sign-up") {
       console.log("signing up.....................");
-      const { data, error } = await signUp({ email, password: pass });
-      if (data?.user && !data.session && data.user.identities?.length === 0) {
-        setError("Already a user : Try log-in");
-      }
-
-      console.log(data);
-
-      if (
-        data?.user &&
-        data.session === null &&
-        data.user.identities.length > 0 &&
-        data.user.confirmation_sent_at
-      ) {
-        setConformation("Email sent, Check your mail and Click the link");
-      }
-
-      if (data?.user && data.session) {
-        navigate("/user");
-      }
+      const { data, error } = await signUp({
+        user_name: userName,
+        email,
+        password: pass,
+      });
 
       if (error) {
         setError(error);
+      } else {
+        setMode("sign-in");
       }
     }
 
@@ -103,6 +88,18 @@ const LoginForm = () => {
           onSubmit={handleSubmit}
           className="flex flex-col gap-8 *:flex *:flex-col *:gap-1"
         >
+          {mode === "sign-up" && (
+            <div className="">
+              <label className="opacity-70 text-sm">User Name</label>
+              <input
+                name="user_name"
+                type="text"
+                placeholder="dullat"
+                onChange={(e) => setUserName(e.target.value)}
+                className="rounded py-1 px-2 "
+              />
+            </div>
+          )}
           <div className="">
             <label className="opacity-70 text-sm">Email</label>
             <input

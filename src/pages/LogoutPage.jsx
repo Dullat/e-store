@@ -1,14 +1,23 @@
-import { useLogoutQuery } from "../features/profile/profileApi.js";
+import { useEffect } from "react";
+import { useLogoutMutation } from "../features/profile/profileApi.js";
 
 const LogoutPage = () => {
-  const { data, isError, isLoading, isSuccess } = useLogoutQuery();
+  const [logout, { isLoading, isSuccess, isError }] = useLogoutMutation();
+
+  useEffect(() => {
+    logout();
+  }, [logout]);
 
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div>
         {isLoading && !isSuccess
           ? "Logging Out..."
-          : isSuccess && "Logged-Out..."}
+          : isSuccess
+            ? "Logged Out"
+            : isError
+              ? "Logout Failed"
+              : null}
       </div>
     </div>
   );
