@@ -28,7 +28,7 @@ export const userApi = ApiBase.injectEndpoints({
           const data = await queryFulfilled;
           dispatch(
             setProfile({
-              profile: data.user,
+              profile: data.data.user,
             }),
           );
         } catch (err) {
@@ -44,7 +44,7 @@ export const userApi = ApiBase.injectEndpoints({
           const data = await queryFulfilled;
           dispatch(
             setProfile({
-              profile: data.user,
+              profile: data.data.user,
             }),
           );
         } catch (err) {

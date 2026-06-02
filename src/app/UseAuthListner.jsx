@@ -6,6 +6,7 @@ import { setProfile, unsetProfile } from "../features/profile/profileSlice";
 
 const UseAuthListener = () => {
   const { data, isLoading, isError, error } = useGetProfileQuery();
+  console.log(data, "this is from main root");
 
   return null;
 };
