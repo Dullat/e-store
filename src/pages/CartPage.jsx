@@ -21,7 +21,7 @@ const CartPage = () => {
       </div>
     );
 
-  if (data.cart.length < 1)
+  if (data?.cart.length < 1 || !data)
     return (
       <div className="w-full grid place-content-center mt-8">
         <p>Not items in cart...</p>

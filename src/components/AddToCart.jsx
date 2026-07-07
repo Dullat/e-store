@@ -43,10 +43,12 @@ const AddToCart = ({ gameId, gameName, gameBg, type = "" }) => {
 
   useEffect(() => {
     if (cart) {
-      const boolData = cart.some((item) => item.game_id === gameId);
+      const boolData = cart.some(
+        (item) => Number(item.game_id) === Number(gameId),
+      );
       setIsAdded(boolData);
     }
-  }, []);
+  }, [cart]);
 
   useEffect(() => {
     const checkStatus = () => {
@@ -90,4 +92,3 @@ const AddToCart = ({ gameId, gameName, gameBg, type = "" }) => {
 };
 
 export default AddToCart;
-
